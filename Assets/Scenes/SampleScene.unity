@@ -446,6 +446,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e57ea7629b8f6c4c87d46099ae23d40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Torqueing: 0
+  Forcing: 0
 --- !u!1 &484852958
 GameObject:
   m_ObjectHideFlags: 0
@@ -667,6 +669,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11e27d6168e1ff040babdf949d1c42a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shapeLists: []
+  shapeIndex: 0
+  Torqueing: 12
+  Forcing: 0
+  DeadzoneUp: 0.01
+  DeadzoneDown: -0.01
+  DeadzoneLeft: -0.01
+  DeadzoneRight: 0.01
 --- !u!54 &715705009
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1039,6 +1049,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e57ea7629b8f6c4c87d46099ae23d40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Torqueing: 0
+  Forcing: 0
 --- !u!1 &1742733161
 GameObject:
   m_ObjectHideFlags: 0
@@ -1177,6 +1189,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e57ea7629b8f6c4c87d46099ae23d40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Torqueing: 0
+  Forcing: 0
 --- !u!136 &1926429541
 CapsuleCollider:
   m_ObjectHideFlags: 0
