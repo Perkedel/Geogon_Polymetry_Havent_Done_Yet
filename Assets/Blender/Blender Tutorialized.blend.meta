@@ -30,6 +30,8 @@ ModelImporter:
     100048: Sphere_001
     100050: SurfSphere
     100052: Text
+    100054: Cylinder_001
+    100056: Mball
     400000: //RootNode
     400002: Circle
     400004: Cone
@@ -57,10 +59,13 @@ ModelImporter:
     400048: Sphere_001
     400050: SurfSphere
     400052: Text
+    400054: Cylinder_001
+    400056: Mball
     2100000: unnamed
     2100002: Material_002
     2100004: Material_001
     2100006: Material
+    2100008: Material_003
     2300000: Circle
     2300002: Cone
     2300004: Cube_001
@@ -87,6 +92,8 @@ ModelImporter:
     2300046: Sphere_001
     2300048: SurfSphere
     2300050: Text
+    2300052: Cylinder_001
+    2300054: Mball
     3300000: Circle
     3300002: Cone
     3300004: Cube_001
@@ -113,6 +120,8 @@ ModelImporter:
     3300046: Sphere_001
     3300048: SurfSphere
     3300050: Text
+    3300052: Cylinder_001
+    3300054: Mball
     4300000: GD_mesh_001
     4300002: GD_mesh
     4300004: Cube_001
@@ -139,6 +148,8 @@ ModelImporter:
     4300046: Sphere
     4300048: Cube
     4300050: Grid
+    4300052: Cylinder_001
+    4300054: Mball
     7400000: Default Take
     9500000: //RootNode
     2186277476908879412: ImportLogs
