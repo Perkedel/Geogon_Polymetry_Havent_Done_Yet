@@ -7,6 +7,7 @@ public class SHanpe : MonoBehaviour
 
     public ShapeList[] shapeLists;
     public int shapeIndex = 0;
+    public int prevShapeIndex = 0;
 
     public float Torqueing = 0f;
     public float Forcing = 0f;
@@ -26,7 +27,42 @@ public class SHanpe : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if (Input.GetKeyDown(KeyCode.Alpha5))
+        {
+            prevShapeIndex = shapeIndex;
+            shapeIndex++;
+            if (shapeIndex > 2)
+            {
+                shapeIndex = 0;
+            }
+            if (shapeIndex < 0)
+            {
+                shapeIndex = 2;
+            }
+            setShape(shapeIndex);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            prevShapeIndex = shapeIndex;
+            shapeIndex--;
+            if (shapeIndex > 2)
+            {
+                shapeIndex = 0;
+            }
+            if (shapeIndex < 0)
+            {
+                shapeIndex = 2;
+            }
+            setShape(shapeIndex);
+        }
+        if (shapeIndex > 2)
+        {
+            shapeIndex = 0;
+        }
+        if (shapeIndex < 0)
+        {
+            shapeIndex = 2;
+        }
 
         if(Input.GetAxis("Horizontal") >= DeadzoneRight || Input.GetAxis("Horizontal") <= DeadzoneLeft)
         {
@@ -40,5 +76,12 @@ public class SHanpe : MonoBehaviour
         }
 
         //Debug.Log(Input.GetAxis("Horizontal")); //result = -1, 0, 1, float value
+    }
+    void setShape(int whichIndex)
+    {
+        shapeLists[prevShapeIndex].gameObject.SetActive(false);
+        shapeLists[whichIndex].gameObject.SetActive(true);
+        Torqueing = shapeLists[whichIndex].Torqueing;
+        Forcing = shapeLists[whichIndex].Forcing;
     }
 }
