@@ -29,33 +29,31 @@ public class SHanpe : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Alpha5))
         {
-            prevShapeIndex = shapeIndex;
-            shapeIndex++;
-            if (shapeIndex > 2)
-            {
-                shapeIndex = 0;
-            }
-            if (shapeIndex < 0)
-            {
-                shapeIndex = 2;
-            }
-            setShape(shapeIndex);
+            moveShape(1);
         }
         if (Input.GetKeyDown(KeyCode.Alpha4))
         {
-            prevShapeIndex = shapeIndex;
-            shapeIndex--;
-            if (shapeIndex > 2)
-            {
-                shapeIndex = 0;
-            }
-            if (shapeIndex < 0)
-            {
-                shapeIndex = 2;
-            }
-            setShape(shapeIndex);
+            moveShape(-1);
         }
-        if (shapeIndex > 2)
+        correctIndex();
+
+        if(Input.GetAxis("Horizontal") >= DeadzoneRight || Input.GetAxis("Horizontal") <= DeadzoneLeft)
+        {
+            GetComponent<Rigidbody>().AddForce(Vector3.right * Forcing * Input.GetAxis("Horizontal"));
+            GetComponent<Rigidbody>().AddTorque(-Vector3.forward * Torqueing * Input.GetAxis("Horizontal")); //Rotation of axis relative. if you X, it will rotate in x axis!
+        }
+        if (Input.GetAxis("Vertical") >= DeadzoneUp || Input.GetAxis("Vertical") <= DeadzoneDown)
+        {
+            GetComponent<Rigidbody>().AddForce(Vector3.forward * Forcing * Input.GetAxis("Vertical"));
+            GetComponent<Rigidbody>().AddTorque(Vector3.right * Torqueing * Input.GetAxis("Vertical"));
+        }
+
+        //Debug.Log(Input.GetAxis("Horizontal")); //result = -1, 0, 1, float value
+    }
+
+    void correctIndex()
+    {
+        if (shapeIndex >= shapeLists.Length)
         {
             shapeIndex = 0;
         }
@@ -63,25 +61,21 @@ public class SHanpe : MonoBehaviour
         {
             shapeIndex = 2;
         }
-
-        if(Input.GetAxis("Horizontal") >= DeadzoneRight || Input.GetAxis("Horizontal") <= DeadzoneLeft)
-        {
-            GetComponent<Rigidbody>().AddForce(Vector3.right * Forcing * Input.GetAxis("Horizontal"));
-            GetComponent<Rigidbody>().AddTorque(Vector3.right * Torqueing * Input.GetAxis("Horizontal"));
-        }
-        if (Input.GetAxis("Vertical") >= DeadzoneUp || Input.GetAxis("Vertical") <= DeadzoneDown)
-        {
-            GetComponent<Rigidbody>().AddForce(Vector3.forward * Forcing * Input.GetAxis("Vertical"));
-            GetComponent<Rigidbody>().AddTorque(Vector3.forward * Torqueing * Input.GetAxis("Vertical"));
-        }
-
-        //Debug.Log(Input.GetAxis("Horizontal")); //result = -1, 0, 1, float value
     }
+
     void setShape(int whichIndex)
     {
         shapeLists[prevShapeIndex].gameObject.SetActive(false);
         shapeLists[whichIndex].gameObject.SetActive(true);
         Torqueing = shapeLists[whichIndex].Torqueing;
         Forcing = shapeLists[whichIndex].Forcing;
+    }
+
+    void moveShape(int howMuch)
+    {
+        prevShapeIndex = shapeIndex;
+        shapeIndex += howMuch;
+        correctIndex();
+        setShape(shapeIndex);
     }
 }
