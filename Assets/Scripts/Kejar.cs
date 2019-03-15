@@ -10,6 +10,8 @@ public class Kejar : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //Please add if trigger colider range hit, it chases
+        //if trigger collider attack area hit, it attacks
         me = GetComponent<NavMeshAgent>();
 
 
@@ -20,4 +22,6 @@ public class Kejar : MonoBehaviour
     {
         if(Target) me.SetDestination(Target.position);
     }
+
+    //idle or wander
 }
