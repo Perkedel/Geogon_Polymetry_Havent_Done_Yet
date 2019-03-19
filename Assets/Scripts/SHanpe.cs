@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityStandardAssets.CrossPlatformInput;
 
 public class SHanpe : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class SHanpe : MonoBehaviour
     public ShapeList[] shapeLists;
     public int shapeIndex = 0;
     public int prevShapeIndex = 0;
+    public Camera selectCamera;
 
     public float Torqueing = 0f;
     public float Forcing = 0f;
@@ -18,15 +20,20 @@ public class SHanpe : MonoBehaviour
     public float DeadzoneLeft = -0.01f;
     public float DeadzoneRight = 0.01f;
 
+    //Move based on camera look at
+    public Vector3 front;
+    public Vector3 side;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        if(!selectCamera) selectCamera = Camera.main;
     }
 
     // Update is called once per frame
     void Update()
     {
+        front = new Vector3(0, selectCamera.transform.rotation.y, 0);
         if (Input.GetKeyDown(KeyCode.Alpha5))
         {
             moveShape(1);
@@ -37,9 +44,9 @@ public class SHanpe : MonoBehaviour
         }
         correctIndex();
 
-        if(Input.GetAxis("Horizontal") >= DeadzoneRight || Input.GetAxis("Horizontal") <= DeadzoneLeft)
+        /*if(Input.GetAxis("Horizontal") >= DeadzoneRight || Input.GetAxis("Horizontal") <= DeadzoneLeft)
         {
-            GetComponent<Rigidbody>().AddForce(Vector3.right * Forcing * Input.GetAxis("Horizontal"));
+            //GetComponent<Rigidbody>().AddForce(Vector3.right * Forcing * Input.GetAxis("Horizontal"));
             GetComponent<Rigidbody>().AddTorque(-Vector3.forward * Torqueing * Input.GetAxis("Horizontal")); //Rotation of axis relative. if you X, it will rotate in x axis!
         }
         if (Input.GetAxis("Vertical") >= DeadzoneUp || Input.GetAxis("Vertical") <= DeadzoneDown)
@@ -47,8 +54,38 @@ public class SHanpe : MonoBehaviour
             GetComponent<Rigidbody>().AddForce(Vector3.forward * Forcing * Input.GetAxis("Vertical"));
             GetComponent<Rigidbody>().AddTorque(Vector3.right * Torqueing * Input.GetAxis("Vertical"));
         }
+        */
+
+
 
         //Debug.Log(Input.GetAxis("Horizontal")); //result = -1, 0, 1, float value
+    }
+
+    private void FixedUpdate()
+    {
+        // https://forum.unity.com/threads/moving-character-relative-to-camera.383086/ Andrey Kubyshkin
+        //reading the input:
+        float horizontalAxis = CrossPlatformInputManager.GetAxis("Horizontal");
+        float verticalAxis = CrossPlatformInputManager.GetAxis("Vertical");
+
+        //assuming we only using the single camera:
+        var camera = Camera.main;
+
+        //camera forward and right vectors:
+        var forward = camera.transform.forward;
+        var right = camera.transform.right;
+
+        //project forward and right vectors on the horizontal plane (y = 0)
+        forward.y = 0f;
+        right.y = 0f;
+        forward.Normalize();
+        right.Normalize();
+
+        //this is the direction in the world space we want to move:
+        var desiredMoveDirection = forward * verticalAxis + right * horizontalAxis;
+
+        GetComponent<Rigidbody>().AddForce(desiredMoveDirection * Forcing);
+        GetComponent<Rigidbody>().AddTorque(new Vector3(desiredMoveDirection.z * Torqueing, 0, desiredMoveDirection.x * -Torqueing));
     }
 
     void correctIndex()

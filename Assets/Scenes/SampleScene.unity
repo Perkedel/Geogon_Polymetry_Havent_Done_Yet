@@ -635,7 +635,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c55dac1caf0372943be9ad01ceeba668, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Target: {fileID: 0}
+  PlayerTransform: {fileID: 715705007}
+  _cameraOffset: {x: 0, y: 0, z: 0}
+  SmoothFactor: 0.5
+  LookAtPlayer: 0
+  RotateAroundPlayer: 1
+  RotationsSpeed: 5
 --- !u!1 &715705006
 GameObject:
   m_ObjectHideFlags: 0
@@ -689,12 +694,15 @@ MonoBehaviour:
   - {fileID: 1780858934}
   shapeIndex: 0
   prevShapeIndex: 0
+  selectCamera: {fileID: 534669904}
   Torqueing: 12
   Forcing: 0
   DeadzoneUp: 0.01
   DeadzoneDown: -0.01
   DeadzoneLeft: -0.01
   DeadzoneRight: 0.01
+  front: {x: 0, y: 0, z: 0}
+  side: {x: 0, y: 0, z: 0}
 --- !u!54 &715705009
 Rigidbody:
   m_ObjectHideFlags: 0
