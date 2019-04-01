@@ -13,6 +13,7 @@ public class SHanpe : MonoBehaviour
 
     public float Torqueing = 0f;
     public float Forcing = 0f;
+    public float Jumping = 500f;
 
     //Deadzoning. Many 3rd party controllers are badly programmed! not all people has luxury!
     public float DeadzoneUp = 0.01f;
@@ -23,6 +24,12 @@ public class SHanpe : MonoBehaviour
     //Move based on camera look at
     public Vector3 front;
     public Vector3 side;
+
+    //Statusing
+    [Range(0f,100f)] public float HP = 100f;
+    [Range(0f, 100f)] public float Armor = 10f;
+    [Range(0,2)] public int JumpToken = 2;
+    public bool hasJumped = false;
 
     // Start is called before the first frame update
     void Start()
@@ -56,7 +63,21 @@ public class SHanpe : MonoBehaviour
         }
         */
 
-
+        if(Input.GetAxis("Jump") > .5f)
+        {
+            if (JumpToken > 0)
+            {
+                if (!hasJumped)
+                {
+                    GetComponent<Rigidbody>().AddForce(Vector3.up * Jumping);
+                    JumpToken--;
+                    hasJumped = true;
+                }
+            }
+        } else
+        {
+            hasJumped = false;
+        }
 
         //Debug.Log(Input.GetAxis("Horizontal")); //result = -1, 0, 1, float value
     }
@@ -114,5 +135,13 @@ public class SHanpe : MonoBehaviour
         shapeIndex += howMuch;
         correctIndex();
         setShape(shapeIndex);
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        JumpToken = 2;
+        //To be added: Anti-tag. Jump Token won't reset if collided with the specific gameobject tag. use script to mark instead of tag Unity.
+        //It also has special insteading function to do with jumptoken.
+        //Item Effect Collider
     }
 }

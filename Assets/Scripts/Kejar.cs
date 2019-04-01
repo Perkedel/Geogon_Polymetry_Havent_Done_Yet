@@ -7,20 +7,44 @@ public class Kejar : MonoBehaviour
 {
     [SerializeField] private NavMeshAgent me;
     [SerializeField] private Transform Target;
+    public Rigidbody rijidbodi;
+
+    public ItemEffects VisionEyecast;
+    public ItemEffects AttackEyecast;
     // Start is called before the first frame update
     void Start()
     {
         //Please add if trigger colider range hit, it chases
         //if trigger collider attack area hit, it attacks
         me = GetComponent<NavMeshAgent>();
-
-
+        rijidbodi = GetComponent<Rigidbody>();
+        if (!VisionEyecast)
+        {
+            
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(Target) me.SetDestination(Target.position);
+        if (VisionEyecast)
+        {
+            if (VisionEyecast.isVisionEyecastHit)
+            {
+
+                if (Target && me.isActiveAndEnabled) me.SetDestination(Target.position);
+            }
+            else
+            {
+
+            }
+        }
+    }
+
+    public void ScronchDiriSendiri()
+    {
+        me.enabled = false;
+        rijidbodi.isKinematic = false;
     }
 
     //idle or wander
