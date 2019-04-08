@@ -6,7 +6,7 @@ using UnityEngine.AI;
 public class Kejar : MonoBehaviour
 {
     [SerializeField] private NavMeshAgent me;
-    [SerializeField] private Transform Target;
+    public Transform Target;
     public Rigidbody rijidbodi;
 
     public ItemEffects VisionEyecast;

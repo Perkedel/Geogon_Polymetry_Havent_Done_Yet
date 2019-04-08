@@ -5,6 +5,8 @@ using UnityStandardAssets.CrossPlatformInput;
 
 public class SHanpe : MonoBehaviour
 {
+    public HexEngineProto CoreLevelManager;
+    public newPersonCamera CameraRig;
 
     public ShapeList[] shapeLists;
     public int shapeIndex = 0;
@@ -31,6 +33,15 @@ public class SHanpe : MonoBehaviour
     [Range(0,2)] public int JumpToken = 2;
     public bool hasJumped = false;
 
+    private void Awake()
+    {
+        GameObject[] SHanpeMyselves = GameObject.FindGameObjectsWithTag("Player");
+        if (SHanpeMyselves.Length > 1)
+        {
+            Destroy(this.gameObject);
+        }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -40,7 +51,13 @@ public class SHanpe : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        front = new Vector3(0, selectCamera.transform.rotation.y, 0);
+        if (selectCamera)
+        {
+            front = new Vector3(0, selectCamera.transform.rotation.y, 0);
+        } else
+        {
+            front = new Vector3(0, 0, 0);
+        }
         if (Input.GetKeyDown(KeyCode.Alpha5))
         {
             moveShape(1);
@@ -117,7 +134,7 @@ public class SHanpe : MonoBehaviour
         }
         if (shapeIndex < 0)
         {
-            shapeIndex = 2;
+            shapeIndex = shapeLists.Length-1;
         }
     }
 
