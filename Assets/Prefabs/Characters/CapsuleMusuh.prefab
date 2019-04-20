@@ -111,7 +111,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   me: {fileID: 7988092941451477588}
   Target: {fileID: 0}
-  rijidbodi: {fileID: 0}
+  rijidbodi: {fileID: 7988092941451477546}
   VisionEyecast: {fileID: 7988092942653990241}
   AttackEyecast: {fileID: 0}
 --- !u!195 &7988092941451477588

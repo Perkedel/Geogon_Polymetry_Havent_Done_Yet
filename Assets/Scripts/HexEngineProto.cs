@@ -16,6 +16,7 @@ public class HexEngineProto : MonoBehaviour
     public HajiyevMusicManager MusicPlayer;
 
     public string WarkSceneName;
+    public string CoreSceneName;
 
     private void Awake()
     {
@@ -63,7 +64,19 @@ public class HexEngineProto : MonoBehaviour
     public void UnWarkTheScene()
     {
         UnloadLevel(WarkSceneName);
-        loadingScreen.SetActive(false);
+        //loadingScreen.SetActive(false);
+    }
+
+    public void CarkTheScene()
+    {
+        LoadLevel(WarkSceneName);
+        UnloadLevel(CoreSceneName); // why core scene cannot unload? is it that there is gameobjects have been do not destroy on load?!
+        setCharacter();
+    }
+
+    public void UnCarkTheScene()
+    {
+        LoadLevel(CoreSceneName);
     }
 
     //GetSHanpe
@@ -101,10 +114,7 @@ public class HexEngineProto : MonoBehaviour
 
     public void LoadLevel(int sceneIndex, LoadSceneMode modus)
     {
-        if (modus == LoadSceneMode.Single)
-        {
-            StartCoroutine(LoadAsynchronously(sceneIndex, LoadSceneMode.Single));
-        }
+        StartCoroutine(LoadAsynchronously(sceneIndex, modus));
     }
 
     public void LoadLevel(string sceneName, LoadSceneMode modus) //This is JOELwindows7's mod. sometimes you will reffer scene by its name in the build.
