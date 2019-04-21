@@ -246,6 +246,15 @@ public class ItemEffects : MonoBehaviour
         }
     }
 
+    [Header("Kaerlev wave")]
+    public bool doEmitKaerlevWave = false; //Hat kid has tendency to taunt :P whenever she saw Mafia, e.g.
+    public bool PersistentKaerleEmission = false;
+    [Range(-100f,100f)] public float howMuchKaerlevWavePowerItHas = 0f;
+    public void letsEmitKaerlevWave()
+    {
+        targetPlayer.ReceiveKaerlevWave(howMuchKaerlevWavePowerItHas);
+    }
+
     [Header("Core of the Core Intinya Inti, Pak Ndul")]
     public bool CoreOfInti = true;
     private void DoTriggerEnter()
@@ -290,7 +299,12 @@ public class ItemEffects : MonoBehaviour
         {
             letsPlayOneRandomSounds();
         }
+        if (doEmitKaerlevWave)
+        {
+            letsEmitKaerlevWave();
+        }
 
+        //Destroys and Disables
         if (doDisableItself)
         {
             letsDisableItself();
@@ -379,7 +393,13 @@ public class ItemEffects : MonoBehaviour
     }
     private void OnTriggerStay(Collider other)
     {
-        
+        if (player)
+        {
+            if (doEmitKaerlevWave)
+            {
+                if(PersistentKaerleEmission) letsEmitKaerlevWave();
+            }
+        }
     }
     private void OnTriggerExit(Collider other)
     {

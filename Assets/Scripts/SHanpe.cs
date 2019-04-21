@@ -154,6 +154,23 @@ public class SHanpe : MonoBehaviour
         setShape(shapeIndex);
     }
 
+    public void ReceiveKaerlevWave(float KaerlevPower)
+    {
+        //Do something if the item has Kaerlev Wave
+        if(KaerlevPower > 0f)
+        {
+            Debug.Log("SHanpe: Cool and Good!!!"); //SHanpe likes
+        }
+        else if(KaerlevPower == 0f)
+        {
+            Debug.Log("SHanpe: meh!"); //SHanpe mehs
+        }
+        else if (KaerlevPower < 0f)
+        {
+            Debug.Log("SHanpe: Wuek!!!"); //SHape hates
+        }
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
         JumpToken = 2;
