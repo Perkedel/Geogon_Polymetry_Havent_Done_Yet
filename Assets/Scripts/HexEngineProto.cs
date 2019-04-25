@@ -40,13 +40,116 @@ public class HexEngineProto : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //https://youtu.be/FRbRQFpVFxg
+        if (eventSystem.currentSelectedGameObject != StoreSelected)
+        {
+            if (eventSystem.currentSelectedGameObject == null)
+            {
+                eventSystem.SetSelectedGameObject(StoreSelected);
+            }
+            else
+            {
+                StoreSelected = eventSystem.currentSelectedGameObject;
+            }
+        }
+
         if (slider)
         {
-            if (slider.value >= .985f)
+            if (slider.value >= 1f)
             {
                 loadingScreen.SetActive(false);
             }
         }
+
+        if (isOnMainMenu)
+        {
+            if (Input.GetAxis("Vertical") < -.5f)
+            {
+                if(OneOfMoreMenuButton) goToMoreMenu(OneOfMoreMenuButton);
+            }
+            if(Input.GetAxis("Vertical") > .5f)
+            {
+                if (PlayButton) AwayFromMoreMenu(PlayButton);
+            }
+        }
+    }
+
+    [Header("More Menu Main Menu")]
+    [SerializeField] bool isOnMainMenu = true;
+    [SerializeField] bool isOnMoreMenuArea = false;
+    [SerializeField] GameObject CurrentMenuLocation;
+    public GameObject MainMenuItself;
+    public GameObject PlayButton;
+    public GameObject OneOfMoreMenuButton;
+    public Animator FocusBarDrawer;
+    public void goToMoreMenu()
+    {
+        isOnMoreMenuArea = true;
+        FocusBarDrawer.SetBool("isOnMoreMenu", isOnMoreMenuArea);
+    }
+    public void goToMoreMenu(GameObject chooseWhichMenu)
+    {
+        isOnMoreMenuArea = true;
+        FocusBarDrawer.SetBool("isOnMoreMenu", isOnMoreMenuArea);
+        SetStoreSelected(chooseWhichMenu);
+    }
+    public void AwayFromMoreMenu()
+    {
+        isOnMoreMenuArea = false;
+        FocusBarDrawer.SetBool("isOnMoreMenu", isOnMoreMenuArea);
+    }
+    public void AwayFromMoreMenu(GameObject insertPlayButtonHere)
+    {
+        isOnMoreMenuArea = false;
+        FocusBarDrawer.SetBool("isOnMoreMenu", isOnMoreMenuArea);
+        SetStoreSelected(insertPlayButtonHere);
+    }
+    public void backToMainMenu()
+    {
+        isOnMainMenu = true;
+        if (CurrentMenuLocation) CurrentMenuLocation.SetActive(false);
+    }
+    public void backToMainMenu(GameObject fromWhere)
+    {
+        isOnMainMenu = true;
+        fromWhere.SetActive(false);
+        MainMenuItself.SetActive(true);
+    }
+    public void awayFromMainMenu()
+    {
+        isOnMainMenu = false;
+    }
+
+    [Header("Level Select")]
+    public GameObject LevelSelectMenu;
+    public void toLevelSelect()
+    {
+        isOnMainMenu = false;
+        CurrentMenuLocation = LevelSelectMenu;
+        CurrentMenuLocation.SetActive(true);
+        MainMenuItself.SetActive(false);
+    }
+
+    [Header("Set Store Selected")]
+    [SerializeField] GameObject StoreSelected; //https://youtu.be/FRbRQFpVFxg Store button selection
+    public void SetStoreSelected(GameObject newThing)
+    {
+        StoreSelected = newThing;
+        eventSystem.SetSelectedGameObject(StoreSelected);
+    }
+
+    [Header("Play the Level")]
+    public bool isLeveling;
+    public GameObject GameplayHUD;
+    public void PlayThisLevel()
+    {
+
+    }
+    public void PlayThisLevel(string LevelName)
+    {
+        if (GameplayHUD) GameplayHUD.SetActive(true);
+        if(LevelSelectMenu) LevelSelectMenu.SetActive(false);
+        LoadLevel(LevelName);
     }
 
     public void QuitGame()
