@@ -149,7 +149,7 @@ public class HexEngineProto : MonoBehaviour
     {
         if (GameplayHUD) GameplayHUD.SetActive(true);
         if(LevelSelectMenu) LevelSelectMenu.SetActive(false);
-        LoadLevel(LevelName);
+        LoadLevel(LevelName, LoadSceneMode.Additive);
     }
 
     public void QuitGame()

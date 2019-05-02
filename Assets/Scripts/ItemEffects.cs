@@ -61,8 +61,13 @@ public class ItemEffects : MonoBehaviour
                 if (MustBeTheseShapeIndexes[i] && SHanpeShapeIndex == i)
                 {
                     Deserves = true;
+                } else if(!MustBeTheseShapeIndexes[i] && SHanpeShapeIndex == i)
+                {
+                    Deserves = false;
                 }
             }
+
+
         }
     }
 
