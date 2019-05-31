@@ -223,6 +223,22 @@ public class ItemEffects : MonoBehaviour
         isVisionEyecastHit = false;
     }
 
+    [Header("Player hit attack range Handcast")]
+    public bool doAttackHandcast = false;
+    public bool isAttackHandcastHit = false;
+    public void letsAttackHandcast()
+    {
+        isAttackHandcastHit = true;
+        if (MusuhEngine)
+        {
+            MusuhEngine.Focus = player;
+        }
+    }
+    public void stopAttackHandcasst()
+    {
+        isAttackHandcastHit = false;
+    }
+
     [Header("Spawn GameObjects")]
     public bool doEmitGameObjects = false;
     public GameObject[] GameObjectPrefabs;
@@ -308,6 +324,10 @@ public class ItemEffects : MonoBehaviour
         {
             letsEmitKaerlevWave();
         }
+        if (doAttackHandcast)
+        {
+            letsAttackHandcast();
+        }
 
         //Destroys and Disables
         if (doDisableItself)
@@ -322,6 +342,7 @@ public class ItemEffects : MonoBehaviour
     private void DoTriggerExit()
     {
         stopVisionEyeCast();
+        stopAttackHandcasst();
     }
 
 
