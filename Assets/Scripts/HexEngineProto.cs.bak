@@ -15,15 +15,11 @@ public class HexEngineProto : MonoBehaviour
     public newPersonCamera cameraRig;
     public HajiyevMusicManager MusicPlayer;
 
-    
-
     public string WarkSceneName;
     public string CoreSceneName;
 
     private void Awake()
     {
-        if (MainMenuItself) MainMenuo = MainMenuItself.GetComponent<MainMenuing>();
-        if (GameplayHUD) GameHUDManager = GameplayHUD.GetComponent<GamePlayHUDManager>();
 
         GameObject[] HexEngineCores = GameObject.FindGameObjectsWithTag("HexagonEngineCore");
 
@@ -38,7 +34,7 @@ public class HexEngineProto : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        initMainMenu();
+        
     }
 
     // Update is called once per frame
@@ -76,42 +72,6 @@ public class HexEngineProto : MonoBehaviour
                 if (PlayButton) AwayFromMoreMenu(PlayButton);
             }
         }
-
-        if (player)
-        {
-            CharacterControlling = player.IamControllable;
-        }
-
-        if (cameraRig)
-        {
-            CameraControlling = cameraRig.IamControlable;
-        }
-    }
-
-    [Header("Core Buttons")]
-    public bool Melling;
-    public void PressPlayButton()
-    {
-        if(MainMenuo.SelectMenuingType == MainMenuing.MenuingType.MainMenu)
-        {
-            toLevelSelect();
-        } else
-        if(MainMenuo.SelectMenuingType == MainMenuing.MenuingType.PauseMenu)
-        {
-            ResumeThisGame();
-        }
-    }
-    public void PressQuitButton()
-    {
-        if (MainMenuo.SelectMenuingType == MainMenuing.MenuingType.MainMenu)
-        {
-            QuitGame();
-        }
-        else
-        if (MainMenuo.SelectMenuingType == MainMenuing.MenuingType.PauseMenu)
-        {
-            leaveTheLevel();
-        }
     }
 
     [Header("More Menu Main Menu")]
@@ -119,16 +79,9 @@ public class HexEngineProto : MonoBehaviour
     [SerializeField] bool isOnMoreMenuArea = false;
     [SerializeField] GameObject CurrentMenuLocation;
     public GameObject MainMenuItself;
-    public MainMenuing MainMenuo;
     public GameObject PlayButton;
     public GameObject OneOfMoreMenuButton;
     public Animator FocusBarDrawer;
-    public void initMainMenu()
-    {
-        if (player) player.IamControllable = false;
-        if (cameraRig) cameraRig.IamControlable = false;
-        if (cameraRig) cameraRig.zeroPositionCamera();
-    }
     public void goToMoreMenu()
     {
         isOnMoreMenuArea = true;
@@ -147,42 +100,29 @@ public class HexEngineProto : MonoBehaviour
     }
     public void AwayFromMoreMenu(GameObject insertPlayButtonHere)
     {
-        
         isOnMoreMenuArea = false;
         FocusBarDrawer.SetBool("isOnMoreMenu", isOnMoreMenuArea);
         SetStoreSelected(insertPlayButtonHere);
     }
     public void backToMainMenu()
     {
-        initMainMenu();
-        MainMenuo.SelectMenuingType = MainMenuing.MenuingType.MainMenu;
         isOnMainMenu = true;
         if (CurrentMenuLocation) CurrentMenuLocation.SetActive(false);
-        MainMenuItself.SetActive(true);
     }
     public void backToMainMenu(GameObject fromWhere)
     {
-        initMainMenu();
-        MainMenuo.SelectMenuingType = MainMenuing.MenuingType.MainMenu;
         isOnMainMenu = true;
         fromWhere.SetActive(false);
         MainMenuItself.SetActive(true);
     }
-    public void leaveTheLevel()
-    {
-        if (GameplayHUD) GameplayHUD.SetActive(false);
-        UnloadLevel(CurrentLevelName);
-        backToMainMenu(GameplayHUD);
-    }
     public void awayFromMainMenu()
     {
-        MainMenuo.SelectMenuingType = MainMenuing.MenuingType.PauseMenu;
         isOnMainMenu = false;
     }
 
     [Header("Level Select")]
     public GameObject LevelSelectMenu;
-    public void toLevelSelect() // PressPlayButton
+    public void toLevelSelect()
     {
         isOnMainMenu = false;
         CurrentMenuLocation = LevelSelectMenu;
@@ -200,52 +140,16 @@ public class HexEngineProto : MonoBehaviour
 
     [Header("Play the Level")]
     public bool isLeveling;
-    public string CurrentLevelName;
     public GameObject GameplayHUD;
-    [SerializeField] string TestoingLevelName = "SampleScene";
     public void PlayThisLevel()
     {
-        CurrentMenuLocation = GameplayHUD;
-        if (player) player.IamControllable = true;
-        if (cameraRig) cameraRig.IamControlable = true;
-        if (GameplayHUD) GameplayHUD.SetActive(true);
-        if (LevelSelectMenu) LevelSelectMenu.SetActive(false);
-        CurrentLevelName = TestoingLevelName;
-        LoadLevel(TestoingLevelName, LoadSceneMode.Additive);
 
-        setCharacter();
     }
     public void PlayThisLevel(string LevelName)
     {
-        CurrentMenuLocation = GameplayHUD;
-        if (player) player.IamControllable = true;
-        if (cameraRig) cameraRig.IamControlable = true;
         if (GameplayHUD) GameplayHUD.SetActive(true);
         if(LevelSelectMenu) LevelSelectMenu.SetActive(false);
-        CurrentLevelName = LevelName;
         LoadLevel(LevelName, LoadSceneMode.Additive);
-
-        setCharacter();
-    }
-
-    public void PauseThisGame()
-    {
-        if (player) player.IamControllable = false;
-        if (cameraRig) cameraRig.IamControlable = false;
-        if (GameplayHUD) GameplayHUD.SetActive(false);
-        MainMenuo.SelectMenuingType = MainMenuing.MenuingType.PauseMenu;
-        isOnMainMenu = true;
-        MainMenuItself.SetActive(true);
-    }
-    public void ResumeThisGame()
-    {
-        CurrentMenuLocation = GameplayHUD;
-        if (player) player.IamControllable = true;
-        if (cameraRig) cameraRig.IamControlable = true;
-        if (GameplayHUD) GameplayHUD.SetActive(true);
-        //MainMenuo.SelectMenuingType = MainMenuing.MenuingType.MainMenu;
-        isOnMainMenu = false;
-        MainMenuItself.SetActive(false);
     }
 
     public void QuitGame()
@@ -277,12 +181,6 @@ public class HexEngineProto : MonoBehaviour
     {
         LoadLevel(CoreSceneName);
     }
-
-    [Header("Statusing Controlling")]
-    public bool CharacterControlling = false;
-    public bool CameraControlling = false;
-    public GamePlayHUDManager GameHUDManager;
-    
 
     //GetSHanpe
     //public void setCharacter()
