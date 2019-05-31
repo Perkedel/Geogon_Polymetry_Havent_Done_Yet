@@ -32,6 +32,7 @@ public class SHanpe : MonoBehaviour
     [Range(0f, 100f)] public float Armor = 10f;
     [Range(0,2)] public int JumpToken = 2;
     public bool hasJumped = false;
+    public bool IamControllable = true;
 
     private void Awake()
     {
@@ -80,20 +81,28 @@ public class SHanpe : MonoBehaviour
         }
         */
 
-        if(Input.GetAxis("Jump") > .5f)
+        if (IamControllable)
         {
-            if (JumpToken > 0)
+            if (Input.GetAxis("Jump") > .5f)
             {
-                if (!hasJumped)
+                if (JumpToken > 0)
                 {
-                    GetComponent<Rigidbody>().AddForce(Vector3.up * Jumping);
-                    JumpToken--;
-                    hasJumped = true;
+                    if (!hasJumped)
+                    {
+                        GetComponent<Rigidbody>().AddForce(Vector3.up * Jumping);
+                        JumpToken--;
+                        hasJumped = true;
+                    }
                 }
+            }
+            else
+            {
+                hasJumped = false;
             }
         } else
         {
             hasJumped = false;
+            JumpToken = 1;
         }
 
         //Debug.Log(Input.GetAxis("Horizontal")); //result = -1, 0, 1, float value
@@ -103,8 +112,17 @@ public class SHanpe : MonoBehaviour
     {
         // https://forum.unity.com/threads/moving-character-relative-to-camera.383086/ Andrey Kubyshkin
         //reading the input:
-        float horizontalAxis = CrossPlatformInputManager.GetAxis("Horizontal");
-        float verticalAxis = CrossPlatformInputManager.GetAxis("Vertical");
+        float horizontalAxis = 0;
+        float verticalAxis = 0;
+        if (IamControllable)
+        {
+            horizontalAxis = CrossPlatformInputManager.GetAxis("Horizontal");
+            verticalAxis = CrossPlatformInputManager.GetAxis("Vertical");
+        } else
+        {
+            horizontalAxis = 0;
+            verticalAxis = 0;
+        }
 
         //assuming we only using the single camera:
         var camera = Camera.main;
@@ -169,6 +187,22 @@ public class SHanpe : MonoBehaviour
         {
             Debug.Log("SHanpe: Wuek!!!"); //SHape hates
         }
+    }
+
+    public void DamageMe(float HowMuch)
+    {
+        HP -= (HowMuch);
+        Armor -= HowMuch;
+    }
+
+    public void HealMe(float HowMuch)
+    {
+        HP += HowMuch;
+    }
+    public void HealMe(float HowMuch, float withArmor)
+    {
+        HP += HowMuch;
+        Armor += withArmor;
     }
 
     private void OnCollisionEnter(Collision collision)
