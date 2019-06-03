@@ -1,21 +1,28 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityStandardAssets.CrossPlatformInput;
+using UnityEngine.Experimental;
 
 public class SHanpe : MonoBehaviour
 {
-    public HexEngineProto CoreLevelManager;
-    public newPersonCamera CameraRig;
 
+    public HexEngineProto CoreLevelManager;
+    public newPersonCamera CameraRig; 
+    
+    //Spare parts
     public ShapeList[] shapeLists;
     public int shapeIndex = 0;
     public int prevShapeIndex = 0;
     public Camera selectCamera;
+    //public GroundedFootCast GroundedFootCasting;
 
+    //Parametrics
     public float Torqueing = 0f;
     public float Forcing = 0f;
     public float Jumping = 500f;
+    public float FootGroundLength = 0.5f;
 
     //Deadzoning. Many 3rd party controllers are badly programmed! not all people has luxury!
     public float DeadzoneUp = 0.01f;
@@ -33,6 +40,7 @@ public class SHanpe : MonoBehaviour
     [Range(0,2)] public int JumpToken = 2;
     public bool hasJumped = false;
     public bool IamControllable = true;
+    public bool RayGrounded = false;
 
     private void Awake()
     {
@@ -81,10 +89,21 @@ public class SHanpe : MonoBehaviour
         }
         */
 
+        
+        RaycastHit Hit; //Raycasting from Official Unity Tutorial
+        Ray GroundingRay = new Ray(transform.position, Vector3.down);
+        Debug.DrawRay(transform.position, Vector3.down * FootGroundLength);
+        RayGrounded = Physics.Raycast(GroundingRay, out Hit, FootGroundLength);
         if (IamControllable)
         {
+            if ((MeIsGrounded && RayGrounded) && JumpToken < 2)
+            {
+                JumpToken = 2;
+            }
             if (Input.GetAxis("Jump") > .5f)
             {
+                
+
                 if (JumpToken > 0)
                 {
                     if (!hasJumped)
@@ -102,7 +121,7 @@ public class SHanpe : MonoBehaviour
         } else
         {
             hasJumped = false;
-            JumpToken = 1;
+            JumpToken = 0;
         }
 
         //Debug.Log(Input.GetAxis("Horizontal")); //result = -1, 0, 1, float value
@@ -116,12 +135,14 @@ public class SHanpe : MonoBehaviour
         float verticalAxis = 0;
         if (IamControllable)
         {
-            horizontalAxis = CrossPlatformInputManager.GetAxis("Horizontal");
-            verticalAxis = CrossPlatformInputManager.GetAxis("Vertical");
+            //horizontalAxis = CrossPlatformInputManager.GetAxis("Horizontal");
+            //verticalAxis = CrossPlatformInputManager.GetAxis("Vertical");
+            horizontalAxis = Input.GetAxis("Horizontal");
+            verticalAxis = Input.GetAxis("Vertical");
         } else
         {
-            horizontalAxis = 0;
-            verticalAxis = 0;
+            horizontalAxis = 0f;
+            verticalAxis = 0f;
         }
 
         //assuming we only using the single camera:
@@ -205,11 +226,20 @@ public class SHanpe : MonoBehaviour
         Armor += withArmor;
     }
 
+    [Header("Grounded")]
+    [SerializeField] bool MeIsGrounded = false;
+    [SerializeField] bool footIsGrounded = false;
     private void OnCollisionEnter(Collision collision)
     {
-        JumpToken = 2;
+        MeIsGrounded = true;
+        //JumpToken = 2;
         //To be added: Anti-tag. Jump Token won't reset if collided with the specific gameobject tag. use script to mark instead of tag Unity.
         //It also has special insteading function to do with jumptoken.
         //Item Effect Collider
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        MeIsGrounded = false;
     }
 }
