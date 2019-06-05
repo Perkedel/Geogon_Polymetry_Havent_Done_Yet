@@ -231,6 +231,7 @@ public class SHanpe : MonoBehaviour
     [SerializeField] bool footIsGrounded = false;
     private void OnCollisionEnter(Collision collision)
     {
+        Debug.Log("Me is colliding");
         MeIsGrounded = true;
         //JumpToken = 2;
         //To be added: Anti-tag. Jump Token won't reset if collided with the specific gameobject tag. use script to mark instead of tag Unity.

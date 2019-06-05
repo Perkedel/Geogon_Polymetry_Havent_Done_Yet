@@ -39,7 +39,7 @@ public class Kejar : MonoBehaviour
         {
             if (VisionEyecast.isVisionEyecastHit)
             {
-
+                Debug.Log("Player" + Target.name + "found!");
                 if (Target && me.isActiveAndEnabled) me.SetDestination(Target.position);
             }
             else

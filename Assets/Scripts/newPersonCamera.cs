@@ -71,9 +71,9 @@ public class newPersonCamera : MonoBehaviour
         if (IamControlable)
         {
             //CameraDisabled = false;
-            ControlHorizontal = CrossPlatformInputManager.GetAxis("Mouse X");
-            ControlVertical = CrossPlatformInputManager.GetAxis("Mouse Y");
-            ControlScroll = CrossPlatformInputManager.GetAxis("Mouse ScrollWheel");
+            ControlHorizontal = Input.GetAxis("Mouse X");
+            ControlVertical = Input.GetAxis("Mouse Y");
+            ControlScroll = Input.GetAxis("Mouse ScrollWheel");
         } else
         {
             //CameraDisabled = true;

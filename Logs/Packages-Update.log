@@ -106,3 +106,11 @@ The following packages were removed:
   com.unity.physics@0.0.2-preview.1
   com.unity.probuilder@4.0.4
   nuget.mono-cecil@0.1.6-preview
+
+=== Wed Jun  5 19:34:42 2019
+
+Packages were changed.
+Update Mode: updateDependencies
+
+The following packages were updated:
+  com.unity.ide.visualstudio from version 1.0.5 to 1.0.10

@@ -2,8 +2,10 @@ using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityStandardAssets.CrossPlatformInput;
+using UnityEngine.UI;
 
-[RequireComponent(typeof (GUITexture))]
+//[RequireComponent(typeof (GUITexture))] //GUITexture has been removed this Alpha of 3 today, 5 June 2019. Obsolesence is fine but removal will Thanosifies everything!
+[RequireComponent(typeof(Image))]
 public class ForcedReset : MonoBehaviour
 {
     private void Update()

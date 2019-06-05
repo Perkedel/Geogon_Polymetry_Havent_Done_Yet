@@ -350,7 +350,7 @@ public class ItemEffects : MonoBehaviour
     public bool beingHitByPlayer = false;
     private void OnTriggerEnter(Collider other)
     {
-        
+
         // https://docs.unity3d.com/ScriptReference/Transform.IsChildOf.html
         // Ignore trigger events if between this collider and colliders in children
         // Eg. when you have a complex character with multiple triggers colliders.
@@ -359,9 +359,18 @@ public class ItemEffects : MonoBehaviour
         //    //ActualDeserves = false;
         //    //return;
         //}
-        
+        Debug.Log("Touched By " + other.name + " ColliderObject");
         WhoIsHitting = other.gameObject;
-        if(WhoIsHitting) ParentOfHitting = WhoIsHitting.transform.parent.gameObject;
+        if(WhoIsHitting) ParentOfHitting = WhoIsHitting.transform.parent.transform.parent.gameObject; 
+        //we have made collection of shapes GameObjects in ShapeList GameObject
+        // that this ShapeList contains them 3.
+        //therefore now the ItemEffect must reffer
+        //GRANDPARENT of this shape Who Is Hitting. Because
+        // A.   SHanpe <- and parent again!
+        //      1. ShapeLists: <- go to parent
+        //          - Sphere        -
+        //          - Cube           |<- These were hit
+        //          - Tetrahedron   -
         if (ParentOfHitting) player = ParentOfHitting.GetComponent<SHanpe>();
         if (player)
         {
