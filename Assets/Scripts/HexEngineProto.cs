@@ -14,6 +14,7 @@ public class HexEngineProto : MonoBehaviour
     public SHanpe player;
     public newPersonCamera cameraRig;
     public HajiyevMusicManager MusicPlayer;
+    public Vector3 spawnLocation;
 
     
 
@@ -206,7 +207,12 @@ public class HexEngineProto : MonoBehaviour
     public void PlayThisLevel()
     {
         CurrentMenuLocation = GameplayHUD;
-        if (player) player.IamControllable = true;
+        if (player)
+        {
+            player.IamControllable = true;
+            player.CheckPointres = player.transform.position;
+            spawnLocation = player.transform.position;
+        }
         if (cameraRig) cameraRig.IamControlable = true;
         if (GameplayHUD) GameplayHUD.SetActive(true);
         if (LevelSelectMenu) LevelSelectMenu.SetActive(false);
@@ -218,7 +224,12 @@ public class HexEngineProto : MonoBehaviour
     public void PlayThisLevel(string LevelName)
     {
         CurrentMenuLocation = GameplayHUD;
-        if (player) player.IamControllable = true;
+        if (player)
+        {
+            player.IamControllable = true;
+            player.CheckPointres = player.transform.position;
+            spawnLocation = player.transform.position;
+        }
         if (cameraRig) cameraRig.IamControlable = true;
         if (GameplayHUD) GameplayHUD.SetActive(true);
         if(LevelSelectMenu) LevelSelectMenu.SetActive(false);

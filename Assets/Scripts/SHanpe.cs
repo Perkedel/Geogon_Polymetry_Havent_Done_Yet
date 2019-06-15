@@ -13,6 +13,10 @@ public class SHanpe : MonoBehaviour
     
     //Spare parts
     public ShapeList[] shapeLists;
+    public ShapeListMaster shapeListMaster;
+    public ParticleSystem ExplodosDuar;
+    public AudioClip[] ExplodoSounds;
+    public ShapeList EikSerkatShape;
     public int shapeIndex = 0;
     public int prevShapeIndex = 0;
     public Camera selectCamera;
@@ -23,6 +27,9 @@ public class SHanpe : MonoBehaviour
     public float Forcing = 0f;
     public float Jumping = 500f;
     public float FootGroundLength = 0.5f;
+    public float respawnInTime = 5f;
+    public float respawnTimer;
+    public Vector3 CheckPointres;
 
     //Deadzoning. Many 3rd party controllers are badly programmed! not all people has luxury!
     public float DeadzoneUp = 0.01f;
@@ -36,11 +43,16 @@ public class SHanpe : MonoBehaviour
 
     //Statusing
     [Range(0f,100f)] public float HP = 100f;
+    public bool isAlive= true;
+    public bool hasBooted = true;
     [Range(0f, 100f)] public float Armor = 10f;
     [Range(0,2)] public int JumpToken = 2;
     public bool hasJumped = false;
     public bool IamControllable = true;
     public bool RayGrounded = false;
+
+    //Debugging
+    public bool ScronchSelfButton = false;
 
     private void Awake()
     {
@@ -94,7 +106,7 @@ public class SHanpe : MonoBehaviour
         Ray GroundingRay = new Ray(transform.position, Vector3.down);
         Debug.DrawRay(transform.position, Vector3.down * FootGroundLength);
         RayGrounded = Physics.Raycast(GroundingRay, out Hit, FootGroundLength);
-        if (IamControllable)
+        if (IamControllable && isAlive)
         {
             if ((MeIsGrounded && RayGrounded) && JumpToken < 2)
             {
@@ -102,8 +114,6 @@ public class SHanpe : MonoBehaviour
             }
             if (Input.GetAxis("Jump") > .5f)
             {
-                
-
                 if (JumpToken > 0)
                 {
                     if (!hasJumped)
@@ -125,6 +135,56 @@ public class SHanpe : MonoBehaviour
         }
 
         //Debug.Log(Input.GetAxis("Horizontal")); //result = -1, 0, 1, float value
+        if (ScronchSelfButton)
+        {
+            HP = 0;
+            ScronchSelfButton = false;
+        }
+
+        if(HP > 0)
+        {
+            isAlive = true;
+        } else
+        {
+            isAlive = false;
+        }
+        if (isAlive)
+        {
+            if (!hasBooted)
+            {
+                aliveShape();
+                hasBooted = true;
+            }
+        } else
+        {
+            if (hasBooted)
+            {
+                deddShape();
+                hasBooted = false;
+            }
+        }
+        if (hasBooted)
+        {
+
+        }
+        else
+        {
+            if (!respawnTimerHasStarted)
+            {
+                startRespawn();
+                respawnTimerHasStarted = true;
+            }
+        }
+        if (respawnTimerHasStarted)
+        {
+            respawnTimer -= Time.deltaTime;
+            if(respawnTimer < 0)
+            {
+                respawnSHanpe();
+                respawnTimer = 0;
+                respawnTimerHasStarted = false;
+            }
+        }
     }
 
     private void FixedUpdate()
@@ -191,6 +251,50 @@ public class SHanpe : MonoBehaviour
         shapeIndex += howMuch;
         correctIndex();
         setShape(shapeIndex);
+    }
+
+    void refreshShape()
+    {
+        isAlive = true;
+        correctIndex();
+        setShape(shapeIndex);
+    }
+
+    void deddShape()
+    {
+        correctIndex();
+        shapeListMaster.gameObject.SetActive(false);
+        Instantiate(ExplodosDuar, transform.position, Quaternion.identity);
+        EikSerkatShape.gameObject.SetActive(true);
+        Torqueing = EikSerkatShape.Torqueing;
+        Forcing = EikSerkatShape.Forcing;
+    }
+    void aliveShape()
+    {
+        correctIndex();
+        shapeListMaster.gameObject.SetActive(true);
+        EikSerkatShape.gameObject.SetActive(false);
+        Torqueing = shapeLists[shapeIndex].Torqueing;
+        Forcing = shapeLists[shapeIndex].Forcing;
+    }
+
+    [SerializeField] bool respawnTimerHasStarted = false;
+    void startRespawn()
+    {
+        respawnTimer = respawnInTime;
+        //respawnTimerHasStarted = true;
+    }
+
+    public void teleportSHanpe(Vector3 position)
+    {
+        transform.position = position;
+    }
+
+    public void respawnSHanpe()
+    {
+        HP = 100;
+        refreshShape();
+        teleportSHanpe(CheckPointres);
     }
 
     public void ReceiveKaerlevWave(float KaerlevPower)
