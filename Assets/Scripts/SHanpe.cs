@@ -106,21 +106,24 @@ public class SHanpe : MonoBehaviour
         Ray GroundingRay = new Ray(transform.position, Vector3.down);
         Debug.DrawRay(transform.position, Vector3.down * FootGroundLength);
         RayGrounded = Physics.Raycast(GroundingRay, out Hit, FootGroundLength);
-        if (IamControllable && isAlive)
+        if (isAlive)
         {
             if ((MeIsGrounded && RayGrounded) && JumpToken < 2)
             {
                 JumpToken = 2;
             }
-            if (Input.GetAxis("Jump") > .5f)
+            if (IamControllable)
             {
-                if (JumpToken > 0)
+                if (Input.GetAxis("Jump") > .5f)
                 {
-                    if (!hasJumped)
+                    if (JumpToken > 0)
                     {
-                        GetComponent<Rigidbody>().AddForce(Vector3.up * Jumping);
-                        JumpToken--;
-                        hasJumped = true;
+                        if (!hasJumped)
+                        {
+                            GetComponent<Rigidbody>().AddForce(Vector3.up * Jumping);
+                            JumpToken--;
+                            hasJumped = true;
+                        }
                     }
                 }
             }

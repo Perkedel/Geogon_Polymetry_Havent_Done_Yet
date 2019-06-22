@@ -87,6 +87,20 @@ public class HexEngineProto : MonoBehaviour
         {
             CameraControlling = cameraRig.IamControlable;
         }
+
+        if (LevelFinished)
+        {
+            if (!CountDownActionNextStarted)
+            {
+                ResetLevelFinishActionCountdown();
+                StartLevelFinishActionCountDown();
+            }
+            if (CountDownActionNextStarted)
+            {
+                NextActionTimer -= Time.deltaTime;
+            }
+
+        }
     }
 
     [Header("Core Buttons")]
@@ -206,6 +220,7 @@ public class HexEngineProto : MonoBehaviour
     [SerializeField] string TestoingLevelName = "SampleScene";
     public void PlayThisLevel()
     {
+        LevelFinished = false;
         CurrentMenuLocation = GameplayHUD;
         if (player)
         {
@@ -223,7 +238,13 @@ public class HexEngineProto : MonoBehaviour
     }
     public void PlayThisLevel(string LevelName)
     {
+        LevelFinished = false;
         CurrentMenuLocation = GameplayHUD;
+        var go = GameObject.FindGameObjectWithTag("Player");
+        if (go)
+        {
+            GameObject
+        }
         if (player)
         {
             player.IamControllable = true;
@@ -259,6 +280,17 @@ public class HexEngineProto : MonoBehaviour
         MainMenuItself.SetActive(false);
     }
 
+    public void RestartLevel()
+    {
+        string WorkLevelName = CurrentLevelName;
+        UnloadLevel(WorkLevelName);
+        PlayThisLevel(WorkLevelName);
+    }
+    public void NextLevel(string LevelName)
+    {
+        
+    }
+
     public void QuitGame()
     {
         Application.Quit();
@@ -289,10 +321,66 @@ public class HexEngineProto : MonoBehaviour
         LoadLevel(CoreSceneName);
     }
 
+    //Finish Level
+    [SerializeField] bool CountDownActionNextStarted = false;
+    public float DoNextActionIn = 5f;
+    [SerializeField] float NextActionTimer = 5f;
+    [SerializeField] ItemEffects.FinishChoice MemFinishChoice;
+    [SerializeField] ItemEffects.FinishAction MemFinishAction;
+    [SerializeField] string NextSceneName;
+    void StartLevelFinishActionCountDown()
+    {
+        CountDownActionNextStarted = true;
+    }
+    void StopLevelFinishActionCountDown()
+    {
+        CountDownActionNextStarted = false;
+    }
+    void ResetLevelFinishActionCountdown()
+    {
+        StopLevelFinishActionCountDown();
+        NextActionTimer = DoNextActionIn;
+    }
+    public void FinishLevel()
+    {
+        FinishLevel(ItemEffects.FinishChoice.Completed, ItemEffects.FinishAction.MainMenu);
+    }
+    public void FinishLevel(ItemEffects.FinishChoice Choosing, ItemEffects.FinishAction Actioning)
+    {
+        LevelFinished = true;
+        player.IamControllable = false;
+        if (Choosing == ItemEffects.FinishChoice.Completed)
+        {
+            
+        } else
+        {
+
+        }
+        switch (Actioning)
+        {
+            case ItemEffects.FinishAction.NextLevel:
+
+                break;
+            case ItemEffects.FinishAction.RestartLevel:
+
+                break;
+            case ItemEffects.FinishAction.MainMenu:
+                backToMainMenu();
+                break;
+            case ItemEffects.FinishAction.ExitGame:
+
+                break;
+            default:
+                break;
+        }
+    }
+
     [Header("Statusing Controlling")]
     public bool CharacterControlling = false;
     public bool CameraControlling = false;
     public GamePlayHUDManager GameHUDManager;
+    public bool LevelFinished = false;
+
     
 
     //GetSHanpe

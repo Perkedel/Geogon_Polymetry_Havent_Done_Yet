@@ -45,6 +45,15 @@ public class ItemEffects : MonoBehaviour
                 }
             }
         }
+
+        if (!hexEngineProtoTargetMe)
+        {
+            var Go = GameObject.FindGameObjectWithTag("HexagonEngineCore");
+            if (Go)
+            {
+                hexEngineProtoTargetMe = Go.transform.GetComponent<HexEngineProto>();
+            }
+        }
     }
 
     
@@ -69,6 +78,14 @@ public class ItemEffects : MonoBehaviour
 
 
         }
+        //if (!hexEngineProtoTargetMe)
+        //{
+        //    var Go = GameObject.FindGameObjectWithTag("HexagonEngineCore");
+        //    if (Go)
+        //    {
+        //        hexEngineProtoTargetMe = Go.transform.GetComponent<HexEngineProto>();
+        //    }
+        //}
     }
 
     [SerializeField] private int SHanpeShapeIndex = 0;
@@ -138,13 +155,15 @@ public class ItemEffects : MonoBehaviour
         }
     }
 
-    [Header("Finish Level")]
+    [Header("Finish Level, Level Complete / Fail")]
     public bool doFinishLevel = false;
+    public HexEngineProto hexEngineProtoTargetMe;
     public enum FinishChoice { Completed, Failed};
     public FinishChoice SelectFinishType;
+    public enum FinishAction { NextLevel, RestartLevel, MainMenu, ExitGame}
     public void letsFinishLevel()
     {
-
+        hexEngineProtoTargetMe.FinishLevel(SelectFinishType);
     }
 
     [Header("Play These Sounds")]
@@ -327,6 +346,10 @@ public class ItemEffects : MonoBehaviour
         if (doAttackHandcast)
         {
             letsAttackHandcast();
+        }
+        if (doFinishLevel)
+        {
+            letsFinishLevel();
         }
 
         //Destroys and Disables
