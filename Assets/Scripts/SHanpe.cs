@@ -61,12 +61,16 @@ public class SHanpe : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
+        GetComponent<Rigidbody>().maxAngularVelocity = 100f;
+        
     }
 
     // Start is called before the first frame update
     void Start()
     {
         if(!selectCamera) selectCamera = Camera.main;
+        correctIndex();
+        CheckPointres = transform.position;
     }
 
     // Update is called once per frame
@@ -106,6 +110,8 @@ public class SHanpe : MonoBehaviour
         Ray GroundingRay = new Ray(transform.position, Vector3.down);
         Debug.DrawRay(transform.position, Vector3.down * FootGroundLength);
         RayGrounded = Physics.Raycast(GroundingRay, out Hit, FootGroundLength);
+        float horizontalAxis = 0f;
+        float verticalAxis = 0f;
         if (isAlive)
         {
             if ((MeIsGrounded && RayGrounded) && JumpToken < 2)
@@ -114,6 +120,21 @@ public class SHanpe : MonoBehaviour
             }
             if (IamControllable)
             {
+                // https://forum.unity.com/threads/moving-character-relative-to-camera.383086/ Andrey Kubyshkin
+                //reading the input:
+                
+                if (IamControllable)
+                {
+                    //horizontalAxis = CrossPlatformInputManager.GetAxis("Horizontal");
+                    //verticalAxis = CrossPlatformInputManager.GetAxis("Vertical");
+                    horizontalAxis = Input.GetAxis("Horizontal");
+                    verticalAxis = Input.GetAxis("Vertical");
+                }
+                else
+                {
+                    horizontalAxis = 0f;
+                    verticalAxis = 0f;
+                }
                 if (Input.GetAxis("Jump") > .5f)
                 {
                     if (JumpToken > 0)
@@ -125,6 +146,9 @@ public class SHanpe : MonoBehaviour
                             hasJumped = true;
                         }
                     }
+                } else if(Input.GetAxis("Jump") < .5f)
+                {
+                    hasJumped = false;
                 }
             }
             else
@@ -136,6 +160,10 @@ public class SHanpe : MonoBehaviour
             hasJumped = false;
             JumpToken = 0;
         }
+        joyHori = horizontalAxis;
+        joyVert = verticalAxis;
+        GetComponent<Rigidbody>().AddForce(desiredMoveDirection2 * Forcing);
+        GetComponent<Rigidbody>().AddTorque(new Vector3(desiredMoveDirection2.z * Torqueing, 0, desiredMoveDirection2.x * -Torqueing));
 
         //Debug.Log(Input.GetAxis("Horizontal")); //result = -1, 0, 1, float value
         if (ScronchSelfButton)
@@ -190,23 +218,12 @@ public class SHanpe : MonoBehaviour
         }
     }
 
+    [SerializeField] Vector3 desiredMoveDirection2;
+    [SerializeField] float joyVert, joyHori;
     private void FixedUpdate()
     {
-        // https://forum.unity.com/threads/moving-character-relative-to-camera.383086/ Andrey Kubyshkin
-        //reading the input:
-        float horizontalAxis = 0;
-        float verticalAxis = 0;
-        if (IamControllable)
-        {
-            //horizontalAxis = CrossPlatformInputManager.GetAxis("Horizontal");
-            //verticalAxis = CrossPlatformInputManager.GetAxis("Vertical");
-            horizontalAxis = Input.GetAxis("Horizontal");
-            verticalAxis = Input.GetAxis("Vertical");
-        } else
-        {
-            horizontalAxis = 0f;
-            verticalAxis = 0f;
-        }
+        
+        
 
         //assuming we only using the single camera:
         var camera = Camera.main;
@@ -222,10 +239,9 @@ public class SHanpe : MonoBehaviour
         right.Normalize();
 
         //this is the direction in the world space we want to move:
-        var desiredMoveDirection = forward * verticalAxis + right * horizontalAxis;
+        var desiredMoveDirection = forward * joyVert + right * joyHori;
 
-        GetComponent<Rigidbody>().AddForce(desiredMoveDirection * Forcing);
-        GetComponent<Rigidbody>().AddTorque(new Vector3(desiredMoveDirection.z * Torqueing, 0, desiredMoveDirection.x * -Torqueing));
+        desiredMoveDirection2 = desiredMoveDirection;
     }
 
     void correctIndex()
@@ -238,6 +254,8 @@ public class SHanpe : MonoBehaviour
         {
             shapeIndex = shapeLists.Length-1;
         }
+        Torqueing = shapeLists[shapeIndex].Torqueing;
+        Forcing = shapeLists[shapeIndex].Forcing;
     }
 
     void setShape(int whichIndex)

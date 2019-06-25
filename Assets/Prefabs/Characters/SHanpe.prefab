@@ -325,6 +325,9 @@ MonoBehaviour:
   Forcing: 0
   Jumping: 300
   FootGroundLength: 1
+  respawnInTime: 5
+  respawnTimer: 0
+  CheckPointres: {x: 0, y: 0, z: 0}
   DeadzoneUp: 0.01
   DeadzoneDown: -0.01
   DeadzoneLeft: -0.01
@@ -340,6 +343,10 @@ MonoBehaviour:
   IamControllable: 1
   RayGrounded: 0
   ScronchSelfButton: 0
+  desiredMoveDirection2: {x: 0, y: 0, z: 0}
+  joyVert: 0
+  joyHori: 0
+  respawnTimerHasStarted: 0
   MeIsGrounded: 0
   footIsGrounded: 0
 --- !u!54 &7019804449341061981
@@ -445,7 +452,7 @@ SphereCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7019804450090673930}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: e52fb17f9b1e7fd48b8955f1391d3688, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2

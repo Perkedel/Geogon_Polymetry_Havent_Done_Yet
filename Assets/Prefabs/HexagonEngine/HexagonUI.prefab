@@ -3290,9 +3290,19 @@ MonoBehaviour:
   CurrentLevelName: 
   GameplayHUD: {fileID: 8252920117914059138}
   TestoingLevelName: SampleScene
+  CountDownActionNextStarted: 0
+  DoNextActionIn: 5
+  NextActionTimer: 5
+  MemFinishChoice: 0
+  MemFinishAction: 0
+  NextSceneName: 
+  ChooseFinish: 0
+  ChooseAction: 0
+  NextLevelName: 
   CharacterControlling: 0
   CameraControlling: 0
   GameHUDManager: {fileID: 6881539952811327107}
+  LevelFinished: 0
 --- !u!1 &6556327933930163227
 GameObject:
   m_ObjectHideFlags: 0
@@ -5073,41 +5083,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3314881521841597358}
     m_Modifications:
-    - target: {fileID: 9182788327427624511, guid: 755031e1e0198bb49986b9ebc4ed52bb,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 9182788327427624511, guid: 755031e1e0198bb49986b9ebc4ed52bb,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 6556327933764578557}
-    - target: {fileID: 9182788327427624511, guid: 755031e1e0198bb49986b9ebc4ed52bb,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: PressQuitButton
-      objectReference: {fileID: 0}
-    - target: {fileID: 9182788327427624511, guid: 755031e1e0198bb49986b9ebc4ed52bb,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
-    - target: {fileID: 9182788327427624511, guid: 755031e1e0198bb49986b9ebc4ed52bb,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 9182788327427624511, guid: 755031e1e0198bb49986b9ebc4ed52bb,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8451637123749570489, guid: 755031e1e0198bb49986b9ebc4ed52bb,
-        type: 3}
-      propertyPath: m_Text
-      value: Quit
-      objectReference: {fileID: 0}
     - target: {fileID: 7279628215389877746, guid: 755031e1e0198bb49986b9ebc4ed52bb,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5218,6 +5193,41 @@ PrefabInstance:
       propertyPath: m_Name
       value: QuitButton
       objectReference: {fileID: 0}
+    - target: {fileID: 9182788327427624511, guid: 755031e1e0198bb49986b9ebc4ed52bb,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9182788327427624511, guid: 755031e1e0198bb49986b9ebc4ed52bb,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 6556327933764578557}
+    - target: {fileID: 9182788327427624511, guid: 755031e1e0198bb49986b9ebc4ed52bb,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: PressQuitButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 9182788327427624511, guid: 755031e1e0198bb49986b9ebc4ed52bb,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 9182788327427624511, guid: 755031e1e0198bb49986b9ebc4ed52bb,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9182788327427624511, guid: 755031e1e0198bb49986b9ebc4ed52bb,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8451637123749570489, guid: 755031e1e0198bb49986b9ebc4ed52bb,
+        type: 3}
+      propertyPath: m_Text
+      value: Quit
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 755031e1e0198bb49986b9ebc4ed52bb, type: 3}
 --- !u!114 &9081285563607928342 stripped
@@ -5257,11 +5267,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1947227696269123127}
     m_Modifications:
-    - target: {fileID: 6407382944458366921, guid: b45d7224a3327e743b054c5019451247,
-        type: 3}
-      propertyPath: m_Name
-      value: TerrainingLevelCard
-      objectReference: {fileID: 0}
     - target: {fileID: 3847005265359463427, guid: b45d7224a3327e743b054c5019451247,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5382,6 +5387,11 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6407382944458366921, guid: b45d7224a3327e743b054c5019451247,
+        type: 3}
+      propertyPath: m_Name
+      value: TerrainingLevelCard
+      objectReference: {fileID: 0}
     - target: {fileID: 1414227244801333623, guid: b45d7224a3327e743b054c5019451247,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -5451,7 +5461,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 6556327933764578557}
     - target: {fileID: 6877439909465715096, guid: b45d7224a3327e743b054c5019451247,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
@@ -5506,6 +5516,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
       value: TerainingScene
+      objectReference: {fileID: 0}
+    - target: {fileID: 6877439909465715096, guid: b45d7224a3327e743b054c5019451247,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5324488888129122831, guid: b45d7224a3327e743b054c5019451247,
         type: 3}
@@ -5669,11 +5684,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3314881521841597358}
     m_Modifications:
-    - target: {fileID: 8451637123749570489, guid: 755031e1e0198bb49986b9ebc4ed52bb,
-        type: 3}
-      propertyPath: m_Text
-      value: Change DVD
-      objectReference: {fileID: 0}
     - target: {fileID: 7279628215389877746, guid: 755031e1e0198bb49986b9ebc4ed52bb,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5784,6 +5794,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: ChangeDVDButton
       objectReference: {fileID: 0}
+    - target: {fileID: 8451637123749570489, guid: 755031e1e0198bb49986b9ebc4ed52bb,
+        type: 3}
+      propertyPath: m_Text
+      value: Change DVD
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 755031e1e0198bb49986b9ebc4ed52bb, type: 3}
 --- !u!114 &7768835445548584142 stripped
@@ -5823,11 +5838,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3314881521841597358}
     m_Modifications:
-    - target: {fileID: 8451637123749570489, guid: 755031e1e0198bb49986b9ebc4ed52bb,
-        type: 3}
-      propertyPath: m_Text
-      value: Extras
-      objectReference: {fileID: 0}
     - target: {fileID: 7279628215389877746, guid: 755031e1e0198bb49986b9ebc4ed52bb,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5938,6 +5948,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: ExtrasButton
       objectReference: {fileID: 0}
+    - target: {fileID: 8451637123749570489, guid: 755031e1e0198bb49986b9ebc4ed52bb,
+        type: 3}
+      propertyPath: m_Text
+      value: Extras
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 755031e1e0198bb49986b9ebc4ed52bb, type: 3}
 --- !u!114 &6982958867507223134 stripped
@@ -5977,11 +5992,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1947227696269123127}
     m_Modifications:
-    - target: {fileID: 6407382944458366921, guid: b45d7224a3327e743b054c5019451247,
-        type: 3}
-      propertyPath: m_Name
-      value: LevelCard
-      objectReference: {fileID: 0}
     - target: {fileID: 3847005265359463427, guid: b45d7224a3327e743b054c5019451247,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -6087,6 +6097,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 6407382944458366921, guid: b45d7224a3327e743b054c5019451247,
+        type: 3}
+      propertyPath: m_Name
+      value: LevelCard
+      objectReference: {fileID: 0}
     - target: {fileID: 1414227244801333623, guid: b45d7224a3327e743b054c5019451247,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -6187,11 +6202,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3314881521841597358}
     m_Modifications:
-    - target: {fileID: 8451637123749570489, guid: 755031e1e0198bb49986b9ebc4ed52bb,
-        type: 3}
-      propertyPath: m_Text
-      value: Unknown
-      objectReference: {fileID: 0}
     - target: {fileID: 7279628215389877746, guid: 755031e1e0198bb49986b9ebc4ed52bb,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -6302,6 +6312,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: UnknownButton
       objectReference: {fileID: 0}
+    - target: {fileID: 8451637123749570489, guid: 755031e1e0198bb49986b9ebc4ed52bb,
+        type: 3}
+      propertyPath: m_Text
+      value: Unknown
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 755031e1e0198bb49986b9ebc4ed52bb, type: 3}
 --- !u!114 &5860688369368881128 stripped
@@ -6341,11 +6356,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3314881521841597358}
     m_Modifications:
-    - target: {fileID: 8451637123749570489, guid: 755031e1e0198bb49986b9ebc4ed52bb,
-        type: 3}
-      propertyPath: m_Text
-      value: Setting
-      objectReference: {fileID: 0}
     - target: {fileID: 7279628215389877746, guid: 755031e1e0198bb49986b9ebc4ed52bb,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -6455,6 +6465,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: SettingButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 8451637123749570489, guid: 755031e1e0198bb49986b9ebc4ed52bb,
+        type: 3}
+      propertyPath: m_Text
+      value: Setting
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 755031e1e0198bb49986b9ebc4ed52bb, type: 3}

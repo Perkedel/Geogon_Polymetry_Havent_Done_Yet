@@ -45,6 +45,12 @@ public class HexEngineProto : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        var go = GameObject.FindGameObjectWithTag("Player");
+        if (go)
+        {
+            player = go.GetComponent<SHanpe>();
+        }
+
         //https://youtu.be/FRbRQFpVFxg
         if (eventSystem.currentSelectedGameObject != StoreSelected)
         {
@@ -98,7 +104,12 @@ public class HexEngineProto : MonoBehaviour
             if (CountDownActionNextStarted)
             {
                 NextActionTimer -= Time.deltaTime;
+                if (NextActionTimer < 0)
+                {
+                    DoLevelFinishCountDownTimeout();
+                }
             }
+            
 
         }
     }
@@ -220,8 +231,10 @@ public class HexEngineProto : MonoBehaviour
     [SerializeField] string TestoingLevelName = "SampleScene";
     public void PlayThisLevel()
     {
+        ResetLevelFinishActionCountdown();
         LevelFinished = false;
         CurrentMenuLocation = GameplayHUD;
+        
         if (player)
         {
             player.IamControllable = true;
@@ -233,18 +246,19 @@ public class HexEngineProto : MonoBehaviour
         if (LevelSelectMenu) LevelSelectMenu.SetActive(false);
         CurrentLevelName = TestoingLevelName;
         LoadLevel(TestoingLevelName, LoadSceneMode.Additive);
-
+        var go = GameObject.FindGameObjectWithTag("Player");
+        if (go)
+        {
+            player = go.GetComponent<SHanpe>();
+        }
         setCharacter();
     }
     public void PlayThisLevel(string LevelName)
     {
+        ResetLevelFinishActionCountdown();
         LevelFinished = false;
         CurrentMenuLocation = GameplayHUD;
-        var go = GameObject.FindGameObjectWithTag("Player");
-        if (go)
-        {
-            GameObject
-        }
+        
         if (player)
         {
             player.IamControllable = true;
@@ -256,7 +270,11 @@ public class HexEngineProto : MonoBehaviour
         if(LevelSelectMenu) LevelSelectMenu.SetActive(false);
         CurrentLevelName = LevelName;
         LoadLevel(LevelName, LoadSceneMode.Additive);
-
+        var go = GameObject.FindGameObjectWithTag("Player");
+        if (go)
+        {
+            player = go.GetComponent<SHanpe>();
+        }
         setCharacter();
     }
 
@@ -288,7 +306,9 @@ public class HexEngineProto : MonoBehaviour
     }
     public void NextLevel(string LevelName)
     {
-        
+        string WorkLevelName = CurrentLevelName;
+        UnloadLevel(WorkLevelName);
+        PlayThisLevel(LevelName);
     }
 
     public void QuitGame()
@@ -322,6 +342,7 @@ public class HexEngineProto : MonoBehaviour
     }
 
     //Finish Level
+    [Header("Finish Level")]
     [SerializeField] bool CountDownActionNextStarted = false;
     public float DoNextActionIn = 5f;
     [SerializeField] float NextActionTimer = 5f;
@@ -349,30 +370,45 @@ public class HexEngineProto : MonoBehaviour
     {
         LevelFinished = true;
         player.IamControllable = false;
-        if (Choosing == ItemEffects.FinishChoice.Completed)
-        {
-            
-        } else
+
+        StartLevelFinishActionCountDown();
+
+        ChooseAction = Actioning;
+        ChooseFinish = Choosing;
+    }
+
+    [SerializeField] ItemEffects.FinishChoice ChooseFinish;
+    [SerializeField] ItemEffects.FinishAction ChooseAction;
+    [SerializeField] string NextLevelName;
+    public string NextLevelName1 { get => NextLevelName; set => NextLevelName = value; }
+    void DoLevelFinishCountDownTimeout()
+    {
+        if (ChooseFinish == ItemEffects.FinishChoice.Completed)
         {
 
         }
-        switch (Actioning)
+        else
+        {
+
+        }
+        switch (ChooseAction)
         {
             case ItemEffects.FinishAction.NextLevel:
-
+                NextLevel(NextLevelName);
                 break;
             case ItemEffects.FinishAction.RestartLevel:
-
+                RestartLevel();
                 break;
             case ItemEffects.FinishAction.MainMenu:
                 backToMainMenu();
                 break;
             case ItemEffects.FinishAction.ExitGame:
-
+                QuitGame();
                 break;
             default:
                 break;
         }
+        ResetLevelFinishActionCountdown();
     }
 
     [Header("Statusing Controlling")]
@@ -381,15 +417,13 @@ public class HexEngineProto : MonoBehaviour
     public GamePlayHUDManager GameHUDManager;
     public bool LevelFinished = false;
 
-    
-
     //GetSHanpe
     //public void setCharacter()
     //{
     //    GameObject findShanpe = GameObject.FindGameObjectWithTag("Player");
     //    if (!player)
     //    {
-            
+
     //        if (findShanpe)
     //        {
     //            player = findShanpe.GetComponent<SHanpe>();
@@ -402,7 +436,12 @@ public class HexEngineProto : MonoBehaviour
     //}
     public void setCharacter()
     {
-        if(cameraRig) cameraRig.setTarget();
+        var go = GameObject.FindGameObjectWithTag("Player");
+        if (go)
+        {
+            player = go.GetComponent<SHanpe>();
+        }
+        if (cameraRig) cameraRig.setTarget();
     }
 
     //Loading Level

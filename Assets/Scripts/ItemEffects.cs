@@ -161,9 +161,12 @@ public class ItemEffects : MonoBehaviour
     public enum FinishChoice { Completed, Failed};
     public FinishChoice SelectFinishType;
     public enum FinishAction { NextLevel, RestartLevel, MainMenu, ExitGame}
+    public FinishAction SelectFinishAction;
+    public string GoToThisLevelName = "SampleScene";
     public void letsFinishLevel()
     {
-        hexEngineProtoTargetMe.FinishLevel(SelectFinishType);
+        hexEngineProtoTargetMe.FinishLevel(SelectFinishType, SelectFinishAction);
+        hexEngineProtoTargetMe.NextLevelName1 = GoToThisLevelName;
     }
 
     [Header("Play These Sounds")]
@@ -178,14 +181,14 @@ public class ItemEffects : MonoBehaviour
             for(int i = 0; i < SoundLists.Length; i++)
             {
                 if(SoundLists[i])
-                AudioSourceTarget.PlayOneShot(SoundLists[i],Volumeting);
+                AudioSourceTarget.PlayOneShot(SoundLists[i],Volumeting/100f);
             }
         } else if (!AudioSourceTarget)
         {
             for (int i = 0; i < SoundLists.Length; i++)
             {
                 if (SoundLists[i])
-                    GetComponent<AudioSource>().PlayOneShot(SoundLists[i],Volumeting);
+                    GetComponent<AudioSource>().PlayOneShot(SoundLists[i],Volumeting/100f);
             }
         }
     }

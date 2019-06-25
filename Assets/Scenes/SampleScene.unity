@@ -498,7 +498,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_BoundingSphereOverride: {x: 1.0964e-41, y: 1.04e-43, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -1120,7 +1120,10 @@ MonoBehaviour:
   disableNavMeshAgentsList:
   - {fileID: 985581043}
   doFinishLevel: 0
+  hexEngineProtoTargetMe: {fileID: 0}
   SelectFinishType: 0
+  SelectFinishAction: 0
+  GoToThisLevelName: SampleScene
   doPlayTheseSounds: 0
   Volumeting: 100
   AudioSourceTarget: {fileID: 0}
@@ -1644,6 +1647,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2287022806341640259, guid: c8295a902c13b044eb756eaca64b0aad,
+        type: 3}
+      propertyPath: GoToThisLevelName
+      value: TerainingScene
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c8295a902c13b044eb756eaca64b0aad, type: 3}
 --- !u!1 &1621095284
@@ -1886,7 +1894,10 @@ MonoBehaviour:
   doDisableNavMeshAgents: 0
   disableNavMeshAgentsList: []
   doFinishLevel: 0
+  hexEngineProtoTargetMe: {fileID: 0}
   SelectFinishType: 0
+  SelectFinishAction: 0
+  GoToThisLevelName: SampleScene
   doPlayTheseSounds: 0
   Volumeting: 100
   AudioSourceTarget: {fileID: 0}
@@ -2167,6 +2178,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 7019804449341061980, guid: d7ea18f170790e741a8a6f4d6aa9720a,
+        type: 3}
+      propertyPath: selectCamera
+      value: 
+      objectReference: {fileID: 534669904}
+    - target: {fileID: 7019804449341061954, guid: d7ea18f170790e741a8a6f4d6aa9720a,
+        type: 3}
+      propertyPath: m_Name
+      value: SHanpe
+      objectReference: {fileID: 0}
     - target: {fileID: 7019804449341061955, guid: d7ea18f170790e741a8a6f4d6aa9720a,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2222,16 +2243,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7019804449341061954, guid: d7ea18f170790e741a8a6f4d6aa9720a,
-        type: 3}
-      propertyPath: m_Name
-      value: SHanpe
-      objectReference: {fileID: 0}
-    - target: {fileID: 7019804449341061980, guid: d7ea18f170790e741a8a6f4d6aa9720a,
-        type: 3}
-      propertyPath: selectCamera
-      value: 
-      objectReference: {fileID: 534669904}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d7ea18f170790e741a8a6f4d6aa9720a, type: 3}
 --- !u!1001 &7988092942378393832
