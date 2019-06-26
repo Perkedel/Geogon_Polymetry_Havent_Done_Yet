@@ -61,7 +61,7 @@ public class SHanpe : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
-        GetComponent<Rigidbody>().maxAngularVelocity = 100f;
+        GetComponent<Rigidbody>().maxAngularVelocity = 50f;
         
     }
 

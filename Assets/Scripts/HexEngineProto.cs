@@ -400,7 +400,7 @@ public class HexEngineProto : MonoBehaviour
                 RestartLevel();
                 break;
             case ItemEffects.FinishAction.MainMenu:
-                backToMainMenu();
+                leaveTheLevel();
                 break;
             case ItemEffects.FinishAction.ExitGame:
                 QuitGame();
