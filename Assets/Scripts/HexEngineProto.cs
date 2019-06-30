@@ -667,7 +667,7 @@ public class HexEngineProto : MonoBehaviour
         dbconn.Open(); //Open connection to the database.
         IDbCommand dbcmd = dbconn.CreateCommand();
 
-        string sqlQuery = "CREATE TABLE [if not exists] [Level_status] (ID INTEGER, Name TEXT, Status INTEGER, PRIMARY KEY(ID));";
+        string sqlQuery = "CREATE TABLE IF NOT EXISTS [Level_status] (ID INTEGER, Name TEXT, Status INTEGER, PRIMARY KEY(ID));"; //TheDean Stack Overflow
         dbcmd.CommandText = sqlQuery;
         IDataReader reader = dbcmd.ExecuteReader();
 
