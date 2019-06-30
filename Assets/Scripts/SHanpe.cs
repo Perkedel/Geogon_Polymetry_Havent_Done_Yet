@@ -313,7 +313,7 @@ public class SHanpe : MonoBehaviour
 
     public void respawnSHanpe()
     {
-        HP = 100;
+        HP = 100f;
         refreshShape();
         teleportSHanpe(CheckPointres);
     }

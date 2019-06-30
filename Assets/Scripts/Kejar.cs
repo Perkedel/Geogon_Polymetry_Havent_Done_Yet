@@ -40,11 +40,13 @@ public class Kejar : MonoBehaviour
             if (VisionEyecast.isVisionEyecastHit)
             {
                 Debug.Log("Player" + Target.name + "found!");
+                enableIdleWander = false;
                 if (Target && me.isActiveAndEnabled) me.SetDestination(Target.position);
             }
             else
             {
-
+                //Debug.Log("Player" + Target.name + "gone!");
+                enableIdleWander = true;
             }
         }
         if (AttackHandcast)
@@ -81,13 +83,37 @@ public class Kejar : MonoBehaviour
             AttackDelayTimer = DelayIn;
             hasBeenAttacked = false;
         }
+
+        if (me.enabled)
+        {
+            if (enableIdleWander)
+            {
+                IdleWander();
+            }
+        }
     }
 
     public void ScronchDiriSendiri()
     {
+        enableIdleWander = false;
         me.enabled = false;
         rijidbodi.isKinematic = false;
     }
 
     //idle or wander
+    [Header("Idle and Wander")]
+    [SerializeField] bool enableIdleWander = false;
+    [SerializeField] Vector3 WanderLocation;
+    [SerializeField] float NewWanderPointIn = 5f;
+    [SerializeField] float TimerWander = 5f;
+    void IdleWander()
+    {
+        TimerWander -= Time.deltaTime;
+        if (TimerWander < 0)
+        {
+            WanderLocation = new Vector3(transform.position.x + Random.Range(-5f, 5f), transform.position.y, transform.position.z + Random.Range(-5f, 5f));
+            me.SetDestination(WanderLocation);
+            TimerWander = NewWanderPointIn + Random.Range(-2f, 5f);
+        }
+    }
 }

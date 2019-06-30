@@ -151,18 +151,18 @@
   <property name="seekable">1</property>
   <property name="mlt_service">kdenlivetitle</property>
   <property name="kdenlive:clipname">I'm sorry, J...</property>
-  <property name="xmldata">&lt;kdenlivetitle duration="300" LC_NUMERIC="Indonesian_Indonesia.1252" width="1920" height="1080" out="299">&#xd;
- &lt;item type="QGraphicsTextItem" z-index="0">&#xd;
-  &lt;position x="410" y="417">&#xd;
-   &lt;transform>1,0,0,0,1,0,0,0,1&lt;/transform>&#xd;
-  &lt;/position>&#xd;
-  &lt;content line-spacing="0" shadow="0;#64000000;3;3;3" font-underline="0" box-height="246" font-outline-color="0,0,0,255" font="Ubuntu" letter-spacing="0" font-pixel-size="100" font-italic="0" alignment="4" font-weight="75" font-outline="2.7" box-width="1100" font-color="255,119,253,255">I'm sorry, Jonas. I was...&#xd;
-uh..&lt;/content>&#xd;
- &lt;/item>&#xd;
- &lt;startviewport rect="0,0,1920,1080"/>&#xd;
- &lt;endviewport rect="0,0,1920,1080"/>&#xd;
- &lt;background color="0,0,0,0"/>&#xd;
-&lt;/kdenlivetitle>&#xd;
+  <property name="xmldata">&lt;kdenlivetitle duration="300" LC_NUMERIC="Indonesian_Indonesia.1252" width="1920" height="1080" out="299">&#xd;&#xd;
+ &lt;item type="QGraphicsTextItem" z-index="0">&#xd;&#xd;
+  &lt;position x="410" y="417">&#xd;&#xd;
+   &lt;transform>1,0,0,0,1,0,0,0,1&lt;/transform>&#xd;&#xd;
+  &lt;/position>&#xd;&#xd;
+  &lt;content line-spacing="0" shadow="0;#64000000;3;3;3" font-underline="0" box-height="246" font-outline-color="0,0,0,255" font="Ubuntu" letter-spacing="0" font-pixel-size="100" font-italic="0" alignment="4" font-weight="75" font-outline="2.7" box-width="1100" font-color="255,119,253,255">I'm sorry, Jonas. I was...&#xd;&#xd;
+uh..&lt;/content>&#xd;&#xd;
+ &lt;/item>&#xd;&#xd;
+ &lt;startviewport rect="0,0,1920,1080"/>&#xd;&#xd;
+ &lt;endviewport rect="0,0,1920,1080"/>&#xd;&#xd;
+ &lt;background color="0,0,0,0"/>&#xd;&#xd;
+&lt;/kdenlivetitle>&#xd;&#xd;
 </property>
   <property name="kdenlive:duration">00:00:05,000</property>
   <property name="kdenlive:id">6</property>
@@ -181,29 +181,29 @@ uh..&lt;/content>&#xd;
   <property name="seekable">1</property>
   <property name="mlt_service">kdenlivetitle</property>
   <property name="kdenlive:clipname">Daily Beetle Enter</property>
-  <property name="xmldata">&lt;kdenlivetitle duration="70" LC_NUMERIC="Indonesian_Indonesia.1252" width="1920" height="1080" out="69">&#xd;
- &lt;item type="QGraphicsTextItem" z-index="2">&#xd;
-  &lt;position x="0" y="620">&#xd;
-   &lt;transform>1,0,0,0,1,0,0,0,1&lt;/transform>&#xd;
-  &lt;/position>&#xd;
-  &lt;content line-spacing="0" shadow="0;#64000000;3;3;3" font-underline="0" box-height="61" font-outline-color="0,0,0,255" font="Ubuntu" letter-spacing="0" font-pixel-size="48" font-italic="0" alignment="1" font-weight="75" font-outline="2.7" box-width="203" font-color="139,255,255,255">CC4.0-BY&lt;/content>&#xd;
- &lt;/item>&#xd;
- &lt;item type="QGraphicsTextItem" z-index="1">&#xd;
-  &lt;position x="0" y="560">&#xd;
-   &lt;transform>1,0,0,0,1,0,0,0,1&lt;/transform>&#xd;
-  &lt;/position>&#xd;
-  &lt;content line-spacing="0" shadow="0;#64000000;3;3;3" font-underline="0" box-height="61" font-outline-color="0,0,0,255" font="Ubuntu" letter-spacing="0" font-pixel-size="48" font-italic="0" alignment="1" font-weight="75" font-outline="2.7" box-width="332" font-color="90,255,109,255">Kevin Macleod&lt;/content>&#xd;
- &lt;/item>&#xd;
- &lt;item type="QGraphicsTextItem" z-index="0">&#xd;
-  &lt;position x="0" y="460">&#xd;
-   &lt;transform>1,0,0,0,1,0,0,0,1&lt;/transform>&#xd;
-  &lt;/position>&#xd;
-  &lt;content line-spacing="0" shadow="0;#64000000;3;3;3" font-underline="0" box-height="95" font-outline-color="0,0,0,255" font="Ubuntu" letter-spacing="0" font-pixel-size="75" font-italic="0" alignment="1" font-weight="75" font-outline="2.7" box-width="437" font-color="8,65,255,255">Daily Beetle&lt;/content>&#xd;
- &lt;/item>&#xd;
- &lt;startviewport rect="478,0,1920,1080"/>&#xd;
- &lt;endviewport rect="0,0,1920,1080"/>&#xd;
- &lt;background color="0,0,0,0"/>&#xd;
-&lt;/kdenlivetitle>&#xd;
+  <property name="xmldata">&lt;kdenlivetitle duration="70" LC_NUMERIC="Indonesian_Indonesia.1252" width="1920" height="1080" out="69">&#xd;&#xd;
+ &lt;item type="QGraphicsTextItem" z-index="2">&#xd;&#xd;
+  &lt;position x="0" y="620">&#xd;&#xd;
+   &lt;transform>1,0,0,0,1,0,0,0,1&lt;/transform>&#xd;&#xd;
+  &lt;/position>&#xd;&#xd;
+  &lt;content line-spacing="0" shadow="0;#64000000;3;3;3" font-underline="0" box-height="61" font-outline-color="0,0,0,255" font="Ubuntu" letter-spacing="0" font-pixel-size="48" font-italic="0" alignment="1" font-weight="75" font-outline="2.7" box-width="203" font-color="139,255,255,255">CC4.0-BY&lt;/content>&#xd;&#xd;
+ &lt;/item>&#xd;&#xd;
+ &lt;item type="QGraphicsTextItem" z-index="1">&#xd;&#xd;
+  &lt;position x="0" y="560">&#xd;&#xd;
+   &lt;transform>1,0,0,0,1,0,0,0,1&lt;/transform>&#xd;&#xd;
+  &lt;/position>&#xd;&#xd;
+  &lt;content line-spacing="0" shadow="0;#64000000;3;3;3" font-underline="0" box-height="61" font-outline-color="0,0,0,255" font="Ubuntu" letter-spacing="0" font-pixel-size="48" font-italic="0" alignment="1" font-weight="75" font-outline="2.7" box-width="332" font-color="90,255,109,255">Kevin Macleod&lt;/content>&#xd;&#xd;
+ &lt;/item>&#xd;&#xd;
+ &lt;item type="QGraphicsTextItem" z-index="0">&#xd;&#xd;
+  &lt;position x="0" y="460">&#xd;&#xd;
+   &lt;transform>1,0,0,0,1,0,0,0,1&lt;/transform>&#xd;&#xd;
+  &lt;/position>&#xd;&#xd;
+  &lt;content line-spacing="0" shadow="0;#64000000;3;3;3" font-underline="0" box-height="95" font-outline-color="0,0,0,255" font="Ubuntu" letter-spacing="0" font-pixel-size="75" font-italic="0" alignment="1" font-weight="75" font-outline="2.7" box-width="437" font-color="8,65,255,255">Daily Beetle&lt;/content>&#xd;&#xd;
+ &lt;/item>&#xd;&#xd;
+ &lt;startviewport rect="478,0,1920,1080"/>&#xd;&#xd;
+ &lt;endviewport rect="0,0,1920,1080"/>&#xd;&#xd;
+ &lt;background color="0,0,0,0"/>&#xd;&#xd;
+&lt;/kdenlivetitle>&#xd;&#xd;
 </property>
   <property name="kdenlive:duration">00:00:01,167</property>
   <property name="kdenlive:id">7</property>
@@ -223,29 +223,29 @@ uh..&lt;/content>&#xd;
   <property name="seekable">1</property>
   <property name="mlt_service">kdenlivetitle</property>
   <property name="kdenlive:clipname">Daily Beetle Exit</property>
-  <property name="xmldata">&lt;kdenlivetitle duration="70" LC_NUMERIC="Indonesian_Indonesia.1252" width="1920" height="1080" out="69">&#xd;
- &lt;item type="QGraphicsTextItem" z-index="2">&#xd;
-  &lt;position x="0" y="620">&#xd;
-   &lt;transform>1,0,0,0,1,0,0,0,1&lt;/transform>&#xd;
-  &lt;/position>&#xd;
-  &lt;content line-spacing="0" shadow="0;#64000000;3;3;3" font-underline="0" box-height="61" font-outline-color="0,0,0,255" font="Ubuntu" letter-spacing="0" font-pixel-size="48" font-italic="0" alignment="1" font-weight="75" font-outline="2.7" box-width="203" font-color="139,255,255,255">CC4.0-BY&lt;/content>&#xd;
- &lt;/item>&#xd;
- &lt;item type="QGraphicsTextItem" z-index="1">&#xd;
-  &lt;position x="0" y="560">&#xd;
-   &lt;transform>1,0,0,0,1,0,0,0,1&lt;/transform>&#xd;
-  &lt;/position>&#xd;
-  &lt;content line-spacing="0" shadow="0;#64000000;3;3;3" font-underline="0" box-height="61" font-outline-color="0,0,0,255" font="Ubuntu" letter-spacing="0" font-pixel-size="48" font-italic="0" alignment="1" font-weight="75" font-outline="2.7" box-width="332" font-color="90,255,109,255">Kevin Macleod&lt;/content>&#xd;
- &lt;/item>&#xd;
- &lt;item type="QGraphicsTextItem" z-index="0">&#xd;
-  &lt;position x="0" y="460">&#xd;
-   &lt;transform>1,0,0,0,1,0,0,0,1&lt;/transform>&#xd;
-  &lt;/position>&#xd;
-  &lt;content line-spacing="0" shadow="0;#64000000;3;3;3" font-underline="0" box-height="95" font-outline-color="0,0,0,255" font="Ubuntu" letter-spacing="0" font-pixel-size="75" font-italic="0" alignment="1" font-weight="75" font-outline="2.7" box-width="437" font-color="8,65,255,255">Daily Beetle&lt;/content>&#xd;
- &lt;/item>&#xd;
- &lt;startviewport rect="0,0,1920,1080"/>&#xd;
- &lt;endviewport rect="478,0,1920,1080"/>&#xd;
- &lt;background color="0,0,0,0"/>&#xd;
-&lt;/kdenlivetitle>&#xd;
+  <property name="xmldata">&lt;kdenlivetitle duration="70" LC_NUMERIC="Indonesian_Indonesia.1252" width="1920" height="1080" out="69">&#xd;&#xd;
+ &lt;item type="QGraphicsTextItem" z-index="2">&#xd;&#xd;
+  &lt;position x="0" y="620">&#xd;&#xd;
+   &lt;transform>1,0,0,0,1,0,0,0,1&lt;/transform>&#xd;&#xd;
+  &lt;/position>&#xd;&#xd;
+  &lt;content line-spacing="0" shadow="0;#64000000;3;3;3" font-underline="0" box-height="61" font-outline-color="0,0,0,255" font="Ubuntu" letter-spacing="0" font-pixel-size="48" font-italic="0" alignment="1" font-weight="75" font-outline="2.7" box-width="203" font-color="139,255,255,255">CC4.0-BY&lt;/content>&#xd;&#xd;
+ &lt;/item>&#xd;&#xd;
+ &lt;item type="QGraphicsTextItem" z-index="1">&#xd;&#xd;
+  &lt;position x="0" y="560">&#xd;&#xd;
+   &lt;transform>1,0,0,0,1,0,0,0,1&lt;/transform>&#xd;&#xd;
+  &lt;/position>&#xd;&#xd;
+  &lt;content line-spacing="0" shadow="0;#64000000;3;3;3" font-underline="0" box-height="61" font-outline-color="0,0,0,255" font="Ubuntu" letter-spacing="0" font-pixel-size="48" font-italic="0" alignment="1" font-weight="75" font-outline="2.7" box-width="332" font-color="90,255,109,255">Kevin Macleod&lt;/content>&#xd;&#xd;
+ &lt;/item>&#xd;&#xd;
+ &lt;item type="QGraphicsTextItem" z-index="0">&#xd;&#xd;
+  &lt;position x="0" y="460">&#xd;&#xd;
+   &lt;transform>1,0,0,0,1,0,0,0,1&lt;/transform>&#xd;&#xd;
+  &lt;/position>&#xd;&#xd;
+  &lt;content line-spacing="0" shadow="0;#64000000;3;3;3" font-underline="0" box-height="95" font-outline-color="0,0,0,255" font="Ubuntu" letter-spacing="0" font-pixel-size="75" font-italic="0" alignment="1" font-weight="75" font-outline="2.7" box-width="437" font-color="8,65,255,255">Daily Beetle&lt;/content>&#xd;&#xd;
+ &lt;/item>&#xd;&#xd;
+ &lt;startviewport rect="0,0,1920,1080"/>&#xd;&#xd;
+ &lt;endviewport rect="478,0,1920,1080"/>&#xd;&#xd;
+ &lt;background color="0,0,0,0"/>&#xd;&#xd;
+&lt;/kdenlivetitle>&#xd;&#xd;
 </property>
   <property name="kdenlive:duration">00:00:01,167</property>
   <property name="kdenlive:id">8</property>
@@ -265,19 +265,19 @@ uh..&lt;/content>&#xd;
   <property name="seekable">1</property>
   <property name="mlt_service">kdenlivetitle</property>
   <property name="kdenlive:clipname">Daily Beetle Copyright</property>
-  <property name="xmldata">&lt;kdenlivetitle duration="300" LC_NUMERIC="Indonesian_Indonesia.1252" width="1920" height="1080" out="299">&#xd;
- &lt;item type="QGraphicsTextItem" z-index="0">&#xd;
-  &lt;position x="0" y="680">&#xd;
-   &lt;transform>1,0,0,0,1,0,0,0,1&lt;/transform>&#xd;
-  &lt;/position>&#xd;
-  &lt;content line-spacing="0" shadow="0;#64000000;3;3;3" font-underline="0" box-height="114" font-outline-color="0,0,0,255" font="Ubuntu" letter-spacing="0" font-pixel-size="30" font-italic="0" alignment="1" font-weight="25" font-outline="0.5" box-width="813" font-color="255,235,120,255">"Daily Beetle" Kevin MacLeod (incompetech.com)&#xd;
-Licensed under Creative Commons: By Attribution 4.0 License&#xd;
-http://creativecommons.org/licenses/by/4.0/&lt;/content>&#xd;
- &lt;/item>&#xd;
- &lt;startviewport rect="0,0,1920,1080"/>&#xd;
- &lt;endviewport rect="0,0,1920,1080"/>&#xd;
- &lt;background color="0,0,0,0"/>&#xd;
-&lt;/kdenlivetitle>&#xd;
+  <property name="xmldata">&lt;kdenlivetitle duration="300" LC_NUMERIC="Indonesian_Indonesia.1252" width="1920" height="1080" out="299">&#xd;&#xd;
+ &lt;item type="QGraphicsTextItem" z-index="0">&#xd;&#xd;
+  &lt;position x="0" y="680">&#xd;&#xd;
+   &lt;transform>1,0,0,0,1,0,0,0,1&lt;/transform>&#xd;&#xd;
+  &lt;/position>&#xd;&#xd;
+  &lt;content line-spacing="0" shadow="0;#64000000;3;3;3" font-underline="0" box-height="114" font-outline-color="0,0,0,255" font="Ubuntu" letter-spacing="0" font-pixel-size="30" font-italic="0" alignment="1" font-weight="25" font-outline="0.5" box-width="813" font-color="255,235,120,255">"Daily Beetle" Kevin MacLeod (incompetech.com)&#xd;&#xd;
+Licensed under Creative Commons: By Attribution 4.0 License&#xd;&#xd;
+http://creativecommons.org/licenses/by/4.0/&lt;/content>&#xd;&#xd;
+ &lt;/item>&#xd;&#xd;
+ &lt;startviewport rect="0,0,1920,1080"/>&#xd;&#xd;
+ &lt;endviewport rect="0,0,1920,1080"/>&#xd;&#xd;
+ &lt;background color="0,0,0,0"/>&#xd;&#xd;
+&lt;/kdenlivetitle>&#xd;&#xd;
 </property>
   <property name="kdenlive:duration">00:00:05,000</property>
   <property name="kdenlive:id">9</property>
@@ -297,19 +297,19 @@ http://creativecommons.org/licenses/by/4.0/&lt;/content>&#xd;
   <property name="seekable">1</property>
   <property name="mlt_service">kdenlivetitle</property>
   <property name="kdenlive:clipname">Let's Collab...</property>
-  <property name="xmldata">&lt;kdenlivetitle duration="10" LC_NUMERIC="Indonesian_Indonesia.1252" width="1920" height="1080" out="9">
- &lt;item type="QGraphicsTextItem" z-index="0">
-  &lt;position x="611" y="391">
-   &lt;transform>1,0,0,0,1,0,0,0,1&lt;/transform>
-  &lt;/position>
-  &lt;content line-spacing="0" shadow="0;#64000000;3;3;3" font-underline="0" box-height="297" font-outline-color="0,0,0,255" font="Ubuntu" letter-spacing="0" font-pixel-size="80" font-italic="0" alignment="4" font-weight="75" font-outline="0.5" box-width="697" font-color="255,235,120,255">Let's Collab,
-in the near future!
-shall we?&lt;/content>
- &lt;/item>
- &lt;startviewport rect="0,-1080,1920,1080"/>
- &lt;endviewport rect="0,1080,1920,1080"/>
- &lt;background color="0,0,0,0"/>
-&lt;/kdenlivetitle>
+  <property name="xmldata">&lt;kdenlivetitle duration="10" LC_NUMERIC="Indonesian_Indonesia.1252" width="1920" height="1080" out="9">&#xd;
+ &lt;item type="QGraphicsTextItem" z-index="0">&#xd;
+  &lt;position x="611" y="391">&#xd;
+   &lt;transform>1,0,0,0,1,0,0,0,1&lt;/transform>&#xd;
+  &lt;/position>&#xd;
+  &lt;content line-spacing="0" shadow="0;#64000000;3;3;3" font-underline="0" box-height="297" font-outline-color="0,0,0,255" font="Ubuntu" letter-spacing="0" font-pixel-size="80" font-italic="0" alignment="4" font-weight="75" font-outline="0.5" box-width="697" font-color="255,235,120,255">Let's Collab,&#xd;
+in the near future!&#xd;
+shall we?&lt;/content>&#xd;
+ &lt;/item>&#xd;
+ &lt;startviewport rect="0,-1080,1920,1080"/>&#xd;
+ &lt;endviewport rect="0,1080,1920,1080"/>&#xd;
+ &lt;background color="0,0,0,0"/>&#xd;
+&lt;/kdenlivetitle>&#xd;
 </property>
   <property name="kdenlive:duration">00:00:00,167</property>
   <property name="kdenlive:id">10</property>
@@ -329,29 +329,29 @@ shall we?&lt;/content>
   <property name="seekable">1</property>
   <property name="mlt_service">kdenlivetitle</property>
   <property name="kdenlive:clipname">by JOELwindo...</property>
-  <property name="xmldata">&lt;kdenlivetitle duration="300" LC_NUMERIC="Indonesian_Indonesia.1252" width="1920" height="1080" out="299">&#xd;
- &lt;item type="QGraphicsPixmapItem" z-index="2">&#xd;
-  &lt;position x="720" y="1000">&#xd;
-   &lt;transform>0.496287,0,0,0,0.496287,0,0,0,1&lt;/transform>&#xd;
-  &lt;/position>&#xd;
-  &lt;content url="C:/Users/ASUS/Documents/kolmorotzzet (kolmorotshitt)/Artistic Setups/CreativeCommons/by-sa.png"/>&#xd;
- &lt;/item>&#xd;
- &lt;item type="QGraphicsPixmapItem" z-index="1">&#xd;
-  &lt;position x="0" y="1000">&#xd;
-   &lt;transform>0.188763,0,0,0,0.188763,0,0,0,1&lt;/transform>&#xd;
-  &lt;/position>&#xd;
-  &lt;content url="C:/Users/ASUS/Documents/starring codes/Unity Projects/JOELwindows7_GeoGon-ProofConcept_2DgameProg_Unity/Assets/src/Drawings/Logo Setup/Perkedel Logo Typeborder.png"/>&#xd;
- &lt;/item>&#xd;
- &lt;item type="QGraphicsTextItem" z-index="0">&#xd;
-  &lt;position x="0" y="900">&#xd;
-   &lt;transform>1,0,0,0,1,0,0,0,1&lt;/transform>&#xd;
-  &lt;/position>&#xd;
-  &lt;content line-spacing="0" shadow="0;#64000000;3;3;3" font-underline="0" box-height="99" font-outline-color="0,0,0,255" font="Ubuntu" letter-spacing="0" font-pixel-size="80" font-italic="0" alignment="1" font-weight="75" font-outline="0.5" box-width="683" font-color="255,255,255,255">by JOELwindows7&lt;/content>&#xd;
- &lt;/item>&#xd;
- &lt;startviewport rect="0,0,1920,1080"/>&#xd;
- &lt;endviewport rect="0,0,1920,1080"/>&#xd;
- &lt;background color="0,0,0,0"/>&#xd;
-&lt;/kdenlivetitle>&#xd;
+  <property name="xmldata">&lt;kdenlivetitle duration="300" LC_NUMERIC="Indonesian_Indonesia.1252" width="1920" height="1080" out="299">
+ &lt;item type="QGraphicsPixmapItem" z-index="3">
+  &lt;position x="720" y="920">
+   &lt;transform>1,0,0,0,1,0,0,0,1&lt;/transform>
+  &lt;/position>
+  &lt;content url="C:/Users/ASUS/Documents/kolmorotzzet (kolmorotshitt)/Artistic Setups/Creative Commons/by-sa.png"/>
+ &lt;/item>
+ &lt;item type="QGraphicsPixmapItem" z-index="1">
+  &lt;position x="0" y="1000">
+   &lt;transform>0.188763,0,0,0,0.188763,0,0,0,1&lt;/transform>
+  &lt;/position>
+  &lt;content url="C:/Users/ASUS/Documents/starring codes/Unity Projects/JOELwindows7_GeoGon-ProofConcept_2DgameProg_Unity/Assets/src/Drawings/Logo Setup/Perkedel Logo Typeborder.png"/>
+ &lt;/item>
+ &lt;item type="QGraphicsTextItem" z-index="0">
+  &lt;position x="0" y="900">
+   &lt;transform>1,0,0,0,1,0,0,0,1&lt;/transform>
+  &lt;/position>
+  &lt;content line-spacing="0" shadow="0;#64000000;3;3;3" font-underline="0" box-height="99" font-outline-color="0,0,0,255" font="Ubuntu" letter-spacing="0" font-pixel-size="80" font-italic="0" alignment="1" font-weight="75" font-outline="0.5" box-width="683" font-color="255,255,255,255">by JOELwindows7&lt;/content>
+ &lt;/item>
+ &lt;startviewport rect="0,0,1920,1080"/>
+ &lt;endviewport rect="0,0,1920,1080"/>
+ &lt;background color="0,0,0,0"/>
+&lt;/kdenlivetitle>
 </property>
   <property name="kdenlive:duration">00:00:05,000</property>
   <property name="kdenlive:id">11</property>
@@ -370,24 +370,24 @@ shall we?&lt;/content>
   <property name="seekable">1</property>
   <property name="mlt_service">kdenlivetitle</property>
   <property name="kdenlive:clipname">A Hat in Tim...</property>
-  <property name="xmldata">&lt;kdenlivetitle duration="300" LC_NUMERIC="Indonesian_Indonesia.1252" width="1920" height="1080" out="299">
- &lt;item type="QGraphicsTextItem" z-index="0">
-  &lt;position x="641" y="722">
-   &lt;transform>1,0,0,0,1,0,0,0,1&lt;/transform>
-  &lt;/position>
-  &lt;content line-spacing="0" shadow="0;#64000000;3;3;3" font-underline="0" box-height="304" font-outline-color="0,0,0,255" font="Ubuntu" letter-spacing="0" font-pixel-size="30" font-italic="0" alignment="4" font-weight="75" font-outline="0.5" box-width="637" font-color="189,255,184,255">A Hat in Time © Gears for Breakfast [100%]
-Daily Beetle © Kevin Macleod [&amp;lt;100%]
-I smeel Cheese © Vilbrid [&amp;lt;100%]
-Blender 3D © Blender Foundation [&amp;lt;100%]
-Streamlabs OBS © Streamlabs, OBS [&amp;lt;100%]
-Windows 10 © Microsoft [100%]
-KDENLive © KDE [&amp;lt;100%]
-Ubuntu font © Ubuntu (Canonical) [&amp;lt;100%]&lt;/content>
- &lt;/item>
- &lt;startviewport rect="0,0,1920,1080"/>
- &lt;endviewport rect="0,0,1920,1080"/>
- &lt;background color="0,0,0,0"/>
-&lt;/kdenlivetitle>
+  <property name="xmldata">&lt;kdenlivetitle duration="300" LC_NUMERIC="Indonesian_Indonesia.1252" width="1920" height="1080" out="299">&#xd;
+ &lt;item type="QGraphicsTextItem" z-index="0">&#xd;
+  &lt;position x="641" y="722">&#xd;
+   &lt;transform>1,0,0,0,1,0,0,0,1&lt;/transform>&#xd;
+  &lt;/position>&#xd;
+  &lt;content line-spacing="0" shadow="0;#64000000;3;3;3" font-underline="0" box-height="304" font-outline-color="0,0,0,255" font="Ubuntu" letter-spacing="0" font-pixel-size="30" font-italic="0" alignment="4" font-weight="75" font-outline="0.5" box-width="637" font-color="189,255,184,255">A Hat in Time © Gears for Breakfast [100%]&#xd;
+Daily Beetle © Kevin Macleod [&amp;lt;100%]&#xd;
+I smeel Cheese © Vilbrid [&amp;lt;100%]&#xd;
+Blender 3D © Blender Foundation [&amp;lt;100%]&#xd;
+Streamlabs OBS © Streamlabs, OBS [&amp;lt;100%]&#xd;
+Windows 10 © Microsoft [100%]&#xd;
+KDENLive © KDE [&amp;lt;100%]&#xd;
+Ubuntu font © Ubuntu (Canonical) [&amp;lt;100%]&lt;/content>&#xd;
+ &lt;/item>&#xd;
+ &lt;startviewport rect="0,0,1920,1080"/>&#xd;
+ &lt;endviewport rect="0,0,1920,1080"/>&#xd;
+ &lt;background color="0,0,0,0"/>&#xd;
+&lt;/kdenlivetitle>&#xd;
 </property>
   <property name="kdenlive:duration">00:00:05,000</property>
   <property name="kdenlive:id">12</property>
@@ -413,7 +413,7 @@ Ubuntu font © Ubuntu (Canonical) [&amp;lt;100%]&lt;/content>
 ]
 </property>
   <property name="kdenlive:docproperties.kdenliveversion">19.04.2</property>
-  <property name="kdenlive:docproperties.position">20499</property>
+  <property name="kdenlive:docproperties.position">20373</property>
   <property name="kdenlive:docproperties.previewextension"/>
   <property name="kdenlive:docproperties.previewparameters"/>
   <property name="kdenlive:docproperties.profile">atsc_1080p_60</property>

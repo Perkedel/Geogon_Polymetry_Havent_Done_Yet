@@ -1,9 +1,12 @@
-﻿using System.Collections;
+﻿using System;
+using System.Data;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using Mono.Data.Sqlite;
 
 public class HexEngineProto : MonoBehaviour
 {
@@ -16,7 +19,7 @@ public class HexEngineProto : MonoBehaviour
     public HajiyevMusicManager MusicPlayer;
     public Vector3 spawnLocation;
 
-    
+
 
     public string WarkSceneName;
     public string CoreSceneName;
@@ -39,7 +42,9 @@ public class HexEngineProto : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        initDatabaseLoading();
         initMainMenu();
+
     }
 
     // Update is called once per frame
@@ -76,9 +81,9 @@ public class HexEngineProto : MonoBehaviour
         {
             if (Input.GetAxis("Vertical") < -.5f)
             {
-                if(OneOfMoreMenuButton) goToMoreMenu(OneOfMoreMenuButton);
+                if (OneOfMoreMenuButton) goToMoreMenu(OneOfMoreMenuButton);
             }
-            if(Input.GetAxis("Vertical") > .5f)
+            if (Input.GetAxis("Vertical") > .5f)
             {
                 if (PlayButton) AwayFromMoreMenu(PlayButton);
             }
@@ -109,7 +114,7 @@ public class HexEngineProto : MonoBehaviour
                     DoLevelFinishCountDownTimeout();
                 }
             }
-            
+
 
         }
     }
@@ -118,25 +123,41 @@ public class HexEngineProto : MonoBehaviour
     public bool Melling;
     public void PressPlayButton()
     {
-        if(MainMenuo.SelectMenuingType == MainMenuing.MenuingType.MainMenu)
+        if (MainMenuo.SelectMenuingType == MainMenuing.MenuingType.MainMenu)
         {
             toLevelSelect();
         } else
-        if(MainMenuo.SelectMenuingType == MainMenuing.MenuingType.PauseMenu)
+        if (MainMenuo.SelectMenuingType == MainMenuing.MenuingType.PauseMenu)
         {
             ResumeThisGame();
         }
     }
     public void PressQuitButton()
     {
-        if (MainMenuo.SelectMenuingType == MainMenuing.MenuingType.MainMenu)
+        switch (MainMenuo.SelectMenuingType)
         {
-            QuitGame();
+            case MainMenuing.MenuingType.PauseMenu:
+                QuitNounSaying = "Level & back to menu";
+                break;
+            case MainMenuing.MenuingType.MainMenu:
+                QuitNounSaying = "Game";
+                break;
         }
-        else
-        if (MainMenuo.SelectMenuingType == MainMenuing.MenuingType.PauseMenu)
+        WriteYesNo("Are you sure to Quit this" + QuitNounSaying + "?");
+        ActionYesNo = YesNoAction.Quito;
+        InvokeYesNoDialog(YesNoAction.Quito);
+    }
+    [SerializeField] string QuitNounSaying = "Game";
+    public void ActualQuitButton()
+    {
+        switch (MainMenuo.SelectMenuingType)
         {
-            leaveTheLevel();
+            case MainMenuing.MenuingType.PauseMenu:
+                leaveTheLevel();
+                break;
+            case MainMenuing.MenuingType.MainMenu:
+                QuitGame();
+                break;
         }
     }
 
@@ -173,7 +194,7 @@ public class HexEngineProto : MonoBehaviour
     }
     public void AwayFromMoreMenu(GameObject insertPlayButtonHere)
     {
-        
+
         isOnMoreMenuArea = false;
         FocusBarDrawer.SetBool("isOnMoreMenu", isOnMoreMenuArea);
         SetStoreSelected(insertPlayButtonHere);
@@ -234,7 +255,7 @@ public class HexEngineProto : MonoBehaviour
         ResetLevelFinishActionCountdown();
         LevelFinished = false;
         CurrentMenuLocation = GameplayHUD;
-        
+
         if (player)
         {
             player.IamControllable = true;
@@ -258,7 +279,7 @@ public class HexEngineProto : MonoBehaviour
         ResetLevelFinishActionCountdown();
         LevelFinished = false;
         CurrentMenuLocation = GameplayHUD;
-        
+
         if (player)
         {
             player.IamControllable = true;
@@ -267,7 +288,7 @@ public class HexEngineProto : MonoBehaviour
         }
         if (cameraRig) cameraRig.IamControlable = true;
         if (GameplayHUD) GameplayHUD.SetActive(true);
-        if(LevelSelectMenu) LevelSelectMenu.SetActive(false);
+        if (LevelSelectMenu) LevelSelectMenu.SetActive(false);
         CurrentLevelName = LevelName;
         LoadLevel(LevelName, LoadSceneMode.Additive);
         var go = GameObject.FindGameObjectWithTag("Player");
@@ -314,6 +335,7 @@ public class HexEngineProto : MonoBehaviour
     public void QuitGame()
     {
         Application.Quit();
+        Debug.Log("Quit cannot done in editor!");
     }
 
     public void WarkTheScene() //please refference
@@ -442,6 +464,55 @@ public class HexEngineProto : MonoBehaviour
             player = go.GetComponent<SHanpe>();
         }
         if (cameraRig) cameraRig.setTarget();
+    }
+
+    [Header("Dialoging")]
+    public YesNoDialog yesNoDialog;
+    [SerializeField] string YesNoSay;
+    public void WriteYesNo(string say)
+    {
+        YesNoSay = say;
+        yesNoDialog.DialogTitle.text = YesNoSay;
+    }
+    public void invokeYesNoDialog()
+    {
+        yesNoDialog.gameObject.SetActive(true);
+    }
+    public void InvokeYesNoDialog(YesNoAction selectthat)
+    {
+        
+        invokeYesNoDialog();
+        ActionYesNo = selectthat;
+    }
+    public enum YesNoAction { Quito=0, Playo=1, Customizeo=2}
+    public string AboutToPlayName = "SampleScene";
+    public YesNoAction ActionYesNo;
+    public void PressYesButton()
+    {
+        Debug.Log("YES button pressed ");
+        switch (ActionYesNo)
+        {
+            case YesNoAction.Quito:
+                Debug.Log("Go quit this game");
+                ActualQuitButton();
+                break;
+            case YesNoAction.Playo:
+                Debug.Log("Go play a level");
+                PlayThisLevel(AboutToPlayName);
+                break;
+            case YesNoAction.Customizeo:
+                break;
+        }
+        devokeYesNoDialog();
+    }
+    public void PressNoButton()
+    {
+        Debug.Log("NO button pressed");
+        devokeYesNoDialog();
+    }
+    public void devokeYesNoDialog()
+    {
+        yesNoDialog.gameObject.SetActive(false);
     }
 
     //Loading Level
@@ -585,5 +656,63 @@ public class HexEngineProto : MonoBehaviour
 
             yield return null;
         }
+    }
+
+    //Databasings
+    void FirstTimeDatabasing()
+    {
+        string conn = "URI=file:" + Application.dataPath + "/SQL/GameSave.db"; //Path to database.
+        IDbConnection dbconn;
+        dbconn = (IDbConnection)new SqliteConnection(conn);
+        dbconn.Open(); //Open connection to the database.
+        IDbCommand dbcmd = dbconn.CreateCommand();
+
+        string sqlQuery = "CREATE TABLE [if not exists] [Level_status] (ID INTEGER, Name TEXT, Status INTEGER, PRIMARY KEY(ID));";
+        dbcmd.CommandText = sqlQuery;
+        IDataReader reader = dbcmd.ExecuteReader();
+
+
+        while (reader.Read())
+        {
+
+        }
+
+        reader.Close();
+        reader = null;
+        dbcmd.Dispose();
+        dbcmd = null;
+        dbconn.Close();
+        dbconn = null;
+    }
+
+    void initDatabaseLoading()
+    {
+        FirstTimeDatabasing();
+        string conn = "URI=file:" + Application.dataPath + "/SQL/GameSave.db"; //Path to database.
+        IDbConnection dbconn;
+        dbconn = (IDbConnection)new SqliteConnection(conn);
+        dbconn.Open(); //Open connection to the database.
+        IDbCommand dbcmd = dbconn.CreateCommand();
+
+        string sqlQuery = "SELECT ID, Name, Status " + "FROM Level_Status;";
+        dbcmd.CommandText = sqlQuery;
+        IDataReader reader = dbcmd.ExecuteReader();
+
+
+        while (reader.Read())
+        {
+            int IDs = reader.GetInt32(0);
+            string Names = reader.GetString(1);
+            int Statuses = reader.GetInt32(2);
+
+            Debug.Log("ID: " + IDs + ", Name: " +Names+ ", CompleteStatus: " + Statuses);
+        }
+
+        reader.Close();
+        reader = null;
+        dbcmd.Dispose();
+        dbcmd = null;
+        dbconn.Close();
+        dbconn = null;
     }
 }
