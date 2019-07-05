@@ -1,0 +1,4 @@
+Hi, This is Streaming Asset Folder. what does this do? there was a suggestion to place shipable stuffs in here to make anything here copies in the build Data path.
+well, let's see how this turns out.
+
+(JOELwindows7)

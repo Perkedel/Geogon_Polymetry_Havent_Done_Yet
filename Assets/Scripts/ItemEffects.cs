@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Experimental;
-using UnityEngine.Experimental.PlayerLoop;
+//using UnityEngine.Experimental.PlayerLoop;
 
 public class ItemEffects : MonoBehaviour
 {
@@ -45,6 +45,15 @@ public class ItemEffects : MonoBehaviour
                 }
             }
         }
+
+        if (!hexEngineProtoTargetMe)
+        {
+            var Go = GameObject.FindGameObjectWithTag("HexagonEngineCore");
+            if (Go)
+            {
+                hexEngineProtoTargetMe = Go.transform.GetComponent<HexEngineProto>();
+            }
+        }
     }
 
     
@@ -69,6 +78,14 @@ public class ItemEffects : MonoBehaviour
 
 
         }
+        //if (!hexEngineProtoTargetMe)
+        //{
+        //    var Go = GameObject.FindGameObjectWithTag("HexagonEngineCore");
+        //    if (Go)
+        //    {
+        //        hexEngineProtoTargetMe = Go.transform.GetComponent<HexEngineProto>();
+        //    }
+        //}
     }
 
     [SerializeField] private int SHanpeShapeIndex = 0;
@@ -138,13 +155,18 @@ public class ItemEffects : MonoBehaviour
         }
     }
 
-    [Header("Finish Level")]
+    [Header("Finish Level, Level Complete / Fail")]
     public bool doFinishLevel = false;
+    public HexEngineProto hexEngineProtoTargetMe;
     public enum FinishChoice { Completed, Failed};
     public FinishChoice SelectFinishType;
+    public enum FinishAction { NextLevel, RestartLevel, MainMenu, ExitGame}
+    public FinishAction SelectFinishAction;
+    public string GoToThisLevelName = "SampleScene";
     public void letsFinishLevel()
     {
-
+        hexEngineProtoTargetMe.FinishLevel(SelectFinishType, SelectFinishAction);
+        hexEngineProtoTargetMe.NextLevelName1 = GoToThisLevelName;
     }
 
     [Header("Play These Sounds")]
@@ -159,14 +181,14 @@ public class ItemEffects : MonoBehaviour
             for(int i = 0; i < SoundLists.Length; i++)
             {
                 if(SoundLists[i])
-                AudioSourceTarget.PlayOneShot(SoundLists[i],Volumeting);
+                AudioSourceTarget.PlayOneShot(SoundLists[i],Volumeting/100f);
             }
         } else if (!AudioSourceTarget)
         {
             for (int i = 0; i < SoundLists.Length; i++)
             {
                 if (SoundLists[i])
-                    GetComponent<AudioSource>().PlayOneShot(SoundLists[i],Volumeting);
+                    GetComponent<AudioSource>().PlayOneShot(SoundLists[i],Volumeting/100f);
             }
         }
     }
@@ -221,6 +243,22 @@ public class ItemEffects : MonoBehaviour
     public void stopVisionEyeCast()
     {
         isVisionEyecastHit = false;
+    }
+
+    [Header("Player hit attack range Handcast")]
+    public bool doAttackHandcast = false;
+    public bool isAttackHandcastHit = false;
+    public void letsAttackHandcast()
+    {
+        isAttackHandcastHit = true;
+        if (MusuhEngine)
+        {
+            MusuhEngine.Focus = player;
+        }
+    }
+    public void stopAttackHandcasst()
+    {
+        isAttackHandcastHit = false;
     }
 
     [Header("Spawn GameObjects")]
@@ -308,6 +346,14 @@ public class ItemEffects : MonoBehaviour
         {
             letsEmitKaerlevWave();
         }
+        if (doAttackHandcast)
+        {
+            letsAttackHandcast();
+        }
+        if (doFinishLevel)
+        {
+            letsFinishLevel();
+        }
 
         //Destroys and Disables
         if (doDisableItself)
@@ -322,6 +368,7 @@ public class ItemEffects : MonoBehaviour
     private void DoTriggerExit()
     {
         stopVisionEyeCast();
+        stopAttackHandcasst();
     }
 
 
@@ -329,7 +376,7 @@ public class ItemEffects : MonoBehaviour
     public bool beingHitByPlayer = false;
     private void OnTriggerEnter(Collider other)
     {
-        
+
         // https://docs.unity3d.com/ScriptReference/Transform.IsChildOf.html
         // Ignore trigger events if between this collider and colliders in children
         // Eg. when you have a complex character with multiple triggers colliders.
@@ -338,9 +385,18 @@ public class ItemEffects : MonoBehaviour
         //    //ActualDeserves = false;
         //    //return;
         //}
-        
+        Debug.Log("Touched By " + other.name + " ColliderObject");
         WhoIsHitting = other.gameObject;
-        if(WhoIsHitting) ParentOfHitting = WhoIsHitting.transform.parent.gameObject;
+        if(WhoIsHitting) ParentOfHitting = WhoIsHitting.transform.parent.transform.parent.gameObject; 
+        //we have made collection of shapes GameObjects in ShapeList GameObject
+        // that this ShapeList contains them 3.
+        //therefore now the ItemEffect must reffer
+        //GRANDPARENT of this shape Who Is Hitting. Because
+        // A.   SHanpe <- and parent again!
+        //      1. ShapeLists: <- go to parent
+        //          - Sphere        -
+        //          - Cube           |<- These were hit
+        //          - Tetrahedron   -
         if (ParentOfHitting) player = ParentOfHitting.GetComponent<SHanpe>();
         if (player)
         {
@@ -420,4 +476,6 @@ public class ItemEffects : MonoBehaviour
 
         player = null;
     }
+
+    
 }

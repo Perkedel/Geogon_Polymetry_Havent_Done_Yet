@@ -1,9 +1,12 @@
-﻿using System.Collections;
+﻿using System;
+using System.Data;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using Mono.Data.Sqlite;
 
 public class HexEngineProto : MonoBehaviour
 {
@@ -14,12 +17,17 @@ public class HexEngineProto : MonoBehaviour
     public SHanpe player;
     public newPersonCamera cameraRig;
     public HajiyevMusicManager MusicPlayer;
+    public Vector3 spawnLocation;
+
+
 
     public string WarkSceneName;
     public string CoreSceneName;
 
     private void Awake()
     {
+        if (MainMenuItself) MainMenuo = MainMenuItself.GetComponent<MainMenuing>();
+        if (GameplayHUD) GameHUDManager = GameplayHUD.GetComponent<GamePlayHUDManager>();
 
         GameObject[] HexEngineCores = GameObject.FindGameObjectsWithTag("HexagonEngineCore");
 
@@ -34,12 +42,20 @@ public class HexEngineProto : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        initDatabaseLoading();
+        initMainMenu();
+
     }
 
     // Update is called once per frame
     void Update()
     {
+        var go = GameObject.FindGameObjectWithTag("Player");
+        if (go)
+        {
+            player = go.GetComponent<SHanpe>();
+        }
+
         //https://youtu.be/FRbRQFpVFxg
         if (eventSystem.currentSelectedGameObject != StoreSelected)
         {
@@ -65,12 +81,83 @@ public class HexEngineProto : MonoBehaviour
         {
             if (Input.GetAxis("Vertical") < -.5f)
             {
-                if(OneOfMoreMenuButton) goToMoreMenu(OneOfMoreMenuButton);
+                if (OneOfMoreMenuButton) goToMoreMenu(OneOfMoreMenuButton);
             }
-            if(Input.GetAxis("Vertical") > .5f)
+            if (Input.GetAxis("Vertical") > .5f)
             {
                 if (PlayButton) AwayFromMoreMenu(PlayButton);
             }
+        }
+
+        if (player)
+        {
+            CharacterControlling = player.IamControllable;
+        }
+
+        if (cameraRig)
+        {
+            CameraControlling = cameraRig.IamControlable;
+        }
+
+        if (LevelFinished)
+        {
+            if (!CountDownActionNextStarted)
+            {
+                ResetLevelFinishActionCountdown();
+                StartLevelFinishActionCountDown();
+            }
+            if (CountDownActionNextStarted)
+            {
+                NextActionTimer -= Time.deltaTime;
+                if (NextActionTimer < 0)
+                {
+                    DoLevelFinishCountDownTimeout();
+                }
+            }
+
+
+        }
+    }
+
+    [Header("Core Buttons")]
+    public bool Melling;
+    public void PressPlayButton()
+    {
+        if (MainMenuo.SelectMenuingType == MainMenuing.MenuingType.MainMenu)
+        {
+            toLevelSelect();
+        } else
+        if (MainMenuo.SelectMenuingType == MainMenuing.MenuingType.PauseMenu)
+        {
+            ResumeThisGame();
+        }
+    }
+    public void PressQuitButton()
+    {
+        switch (MainMenuo.SelectMenuingType)
+        {
+            case MainMenuing.MenuingType.PauseMenu:
+                QuitNounSaying = "Level & back to menu";
+                break;
+            case MainMenuing.MenuingType.MainMenu:
+                QuitNounSaying = "Game";
+                break;
+        }
+        WriteYesNo("Are you sure to Quit this" + QuitNounSaying + "?");
+        ActionYesNo = YesNoAction.Quito;
+        InvokeYesNoDialog(YesNoAction.Quito);
+    }
+    [SerializeField] string QuitNounSaying = "Game";
+    public void ActualQuitButton()
+    {
+        switch (MainMenuo.SelectMenuingType)
+        {
+            case MainMenuing.MenuingType.PauseMenu:
+                leaveTheLevel();
+                break;
+            case MainMenuing.MenuingType.MainMenu:
+                QuitGame();
+                break;
         }
     }
 
@@ -79,9 +166,16 @@ public class HexEngineProto : MonoBehaviour
     [SerializeField] bool isOnMoreMenuArea = false;
     [SerializeField] GameObject CurrentMenuLocation;
     public GameObject MainMenuItself;
+    public MainMenuing MainMenuo;
     public GameObject PlayButton;
     public GameObject OneOfMoreMenuButton;
     public Animator FocusBarDrawer;
+    public void initMainMenu()
+    {
+        if (player) player.IamControllable = false;
+        if (cameraRig) cameraRig.IamControlable = false;
+        if (cameraRig) cameraRig.zeroPositionCamera();
+    }
     public void goToMoreMenu()
     {
         isOnMoreMenuArea = true;
@@ -100,29 +194,42 @@ public class HexEngineProto : MonoBehaviour
     }
     public void AwayFromMoreMenu(GameObject insertPlayButtonHere)
     {
+
         isOnMoreMenuArea = false;
         FocusBarDrawer.SetBool("isOnMoreMenu", isOnMoreMenuArea);
         SetStoreSelected(insertPlayButtonHere);
     }
     public void backToMainMenu()
     {
+        initMainMenu();
+        MainMenuo.SelectMenuingType = MainMenuing.MenuingType.MainMenu;
         isOnMainMenu = true;
         if (CurrentMenuLocation) CurrentMenuLocation.SetActive(false);
+        MainMenuItself.SetActive(true);
     }
     public void backToMainMenu(GameObject fromWhere)
     {
+        initMainMenu();
+        MainMenuo.SelectMenuingType = MainMenuing.MenuingType.MainMenu;
         isOnMainMenu = true;
         fromWhere.SetActive(false);
         MainMenuItself.SetActive(true);
     }
+    public void leaveTheLevel()
+    {
+        if (GameplayHUD) GameplayHUD.SetActive(false);
+        UnloadLevel(CurrentLevelName);
+        backToMainMenu(GameplayHUD);
+    }
     public void awayFromMainMenu()
     {
+        MainMenuo.SelectMenuingType = MainMenuing.MenuingType.PauseMenu;
         isOnMainMenu = false;
     }
 
     [Header("Level Select")]
     public GameObject LevelSelectMenu;
-    public void toLevelSelect()
+    public void toLevelSelect() // PressPlayButton
     {
         isOnMainMenu = false;
         CurrentMenuLocation = LevelSelectMenu;
@@ -140,21 +247,95 @@ public class HexEngineProto : MonoBehaviour
 
     [Header("Play the Level")]
     public bool isLeveling;
+    public string CurrentLevelName;
     public GameObject GameplayHUD;
+    [SerializeField] string TestoingLevelName = "SampleScene";
     public void PlayThisLevel()
     {
+        ResetLevelFinishActionCountdown();
+        LevelFinished = false;
+        CurrentMenuLocation = GameplayHUD;
 
+        if (player)
+        {
+            player.IamControllable = true;
+            player.CheckPointres = player.transform.position;
+            spawnLocation = player.transform.position;
+        }
+        if (cameraRig) cameraRig.IamControlable = true;
+        if (GameplayHUD) GameplayHUD.SetActive(true);
+        if (LevelSelectMenu) LevelSelectMenu.SetActive(false);
+        CurrentLevelName = TestoingLevelName;
+        LoadLevel(TestoingLevelName, LoadSceneMode.Additive);
+        var go = GameObject.FindGameObjectWithTag("Player");
+        if (go)
+        {
+            player = go.GetComponent<SHanpe>();
+        }
+        setCharacter();
     }
     public void PlayThisLevel(string LevelName)
     {
+        ResetLevelFinishActionCountdown();
+        LevelFinished = false;
+        CurrentMenuLocation = GameplayHUD;
+
+        if (player)
+        {
+            player.IamControllable = true;
+            player.CheckPointres = player.transform.position;
+            spawnLocation = player.transform.position;
+        }
+        if (cameraRig) cameraRig.IamControlable = true;
         if (GameplayHUD) GameplayHUD.SetActive(true);
-        if(LevelSelectMenu) LevelSelectMenu.SetActive(false);
+        if (LevelSelectMenu) LevelSelectMenu.SetActive(false);
+        CurrentLevelName = LevelName;
         LoadLevel(LevelName, LoadSceneMode.Additive);
+        var go = GameObject.FindGameObjectWithTag("Player");
+        if (go)
+        {
+            player = go.GetComponent<SHanpe>();
+        }
+        setCharacter();
+    }
+
+    public void PauseThisGame()
+    {
+        if (player) player.IamControllable = false;
+        if (cameraRig) cameraRig.IamControlable = false;
+        if (GameplayHUD) GameplayHUD.SetActive(false);
+        MainMenuo.SelectMenuingType = MainMenuing.MenuingType.PauseMenu;
+        isOnMainMenu = true;
+        MainMenuItself.SetActive(true);
+    }
+    public void ResumeThisGame()
+    {
+        CurrentMenuLocation = GameplayHUD;
+        if (player) player.IamControllable = true;
+        if (cameraRig) cameraRig.IamControlable = true;
+        if (GameplayHUD) GameplayHUD.SetActive(true);
+        //MainMenuo.SelectMenuingType = MainMenuing.MenuingType.MainMenu;
+        isOnMainMenu = false;
+        MainMenuItself.SetActive(false);
+    }
+
+    public void RestartLevel()
+    {
+        string WorkLevelName = CurrentLevelName;
+        UnloadLevel(WorkLevelName);
+        PlayThisLevel(WorkLevelName);
+    }
+    public void NextLevel(string LevelName)
+    {
+        string WorkLevelName = CurrentLevelName;
+        UnloadLevel(WorkLevelName);
+        PlayThisLevel(LevelName);
     }
 
     public void QuitGame()
     {
         Application.Quit();
+        Debug.Log("Quit cannot done in editor!");
     }
 
     public void WarkTheScene() //please refference
@@ -182,13 +363,89 @@ public class HexEngineProto : MonoBehaviour
         LoadLevel(CoreSceneName);
     }
 
+    //Finish Level
+    [Header("Finish Level")]
+    [SerializeField] bool CountDownActionNextStarted = false;
+    public float DoNextActionIn = 5f;
+    [SerializeField] float NextActionTimer = 5f;
+    [SerializeField] ItemEffects.FinishChoice MemFinishChoice;
+    [SerializeField] ItemEffects.FinishAction MemFinishAction;
+    [SerializeField] string NextSceneName;
+    void StartLevelFinishActionCountDown()
+    {
+        CountDownActionNextStarted = true;
+    }
+    void StopLevelFinishActionCountDown()
+    {
+        CountDownActionNextStarted = false;
+    }
+    void ResetLevelFinishActionCountdown()
+    {
+        StopLevelFinishActionCountDown();
+        NextActionTimer = DoNextActionIn;
+    }
+    public void FinishLevel()
+    {
+        FinishLevel(ItemEffects.FinishChoice.Completed, ItemEffects.FinishAction.MainMenu);
+    }
+    public void FinishLevel(ItemEffects.FinishChoice Choosing, ItemEffects.FinishAction Actioning)
+    {
+        LevelFinished = true;
+        player.IamControllable = false;
+
+        StartLevelFinishActionCountDown();
+
+        ChooseAction = Actioning;
+        ChooseFinish = Choosing;
+    }
+
+    [SerializeField] ItemEffects.FinishChoice ChooseFinish;
+    [SerializeField] ItemEffects.FinishAction ChooseAction;
+    [SerializeField] string NextLevelName;
+    public string NextLevelName1 { get => NextLevelName; set => NextLevelName = value; }
+    void DoLevelFinishCountDownTimeout()
+    {
+        if (ChooseFinish == ItemEffects.FinishChoice.Completed)
+        {
+
+        }
+        else
+        {
+
+        }
+        switch (ChooseAction)
+        {
+            case ItemEffects.FinishAction.NextLevel:
+                NextLevel(NextLevelName);
+                break;
+            case ItemEffects.FinishAction.RestartLevel:
+                RestartLevel();
+                break;
+            case ItemEffects.FinishAction.MainMenu:
+                leaveTheLevel();
+                break;
+            case ItemEffects.FinishAction.ExitGame:
+                QuitGame();
+                break;
+            default:
+                break;
+        }
+        ResetLevelFinishActionCountdown();
+    }
+
+    [Header("Statusing Controlling")]
+    public bool CharacterControlling = false;
+    public bool CameraControlling = false;
+    public GamePlayHUDManager GameHUDManager;
+    public bool LevelFinished = false;
+
     //GetSHanpe
     //public void setCharacter()
     //{
     //    GameObject findShanpe = GameObject.FindGameObjectWithTag("Player");
     //    if (!player)
     //    {
-            
+
     //        if (findShanpe)
     //        {
     //            player = findShanpe.GetComponent<SHanpe>();
@@ -201,7 +458,61 @@ public class HexEngineProto : MonoBehaviour
     //}
     public void setCharacter()
     {
-        if(cameraRig) cameraRig.setTarget();
+        var go = GameObject.FindGameObjectWithTag("Player");
+        if (go)
+        {
+            player = go.GetComponent<SHanpe>();
+        }
+        if (cameraRig) cameraRig.setTarget();
+    }
+
+    [Header("Dialoging")]
+    public YesNoDialog yesNoDialog;
+    [SerializeField] string YesNoSay;
+    public void WriteYesNo(string say)
+    {
+        YesNoSay = say;
+        yesNoDialog.DialogTitle.text = YesNoSay;
+    }
+    public void invokeYesNoDialog()
+    {
+        yesNoDialog.gameObject.SetActive(true);
+    }
+    public void InvokeYesNoDialog(YesNoAction selectthat)
+    {
+        
+        invokeYesNoDialog();
+        ActionYesNo = selectthat;
+    }
+    public enum YesNoAction { Quito=0, Playo=1, Customizeo=2}
+    public string AboutToPlayName = "SampleScene";
+    public YesNoAction ActionYesNo;
+    public void PressYesButton()
+    {
+        Debug.Log("YES button pressed ");
+        switch (ActionYesNo)
+        {
+            case YesNoAction.Quito:
+                Debug.Log("Go quit this game");
+                ActualQuitButton();
+                break;
+            case YesNoAction.Playo:
+                Debug.Log("Go play a level");
+                PlayThisLevel(AboutToPlayName);
+                break;
+            case YesNoAction.Customizeo:
+                break;
+        }
+        devokeYesNoDialog();
+    }
+    public void PressNoButton()
+    {
+        Debug.Log("NO button pressed");
+        devokeYesNoDialog();
+    }
+    public void devokeYesNoDialog()
+    {
+        yesNoDialog.gameObject.SetActive(false);
     }
 
     //Loading Level
@@ -345,5 +656,63 @@ public class HexEngineProto : MonoBehaviour
 
             yield return null;
         }
+    }
+
+    //Databasings
+    void FirstTimeDatabasing()
+    {
+        string conn = "URI=file:" + Application.dataPath + "/SQL/GameSave.db"; //Path to database.
+        IDbConnection dbconn;
+        dbconn = (IDbConnection)new SqliteConnection(conn);
+        dbconn.Open(); //Open connection to the database.
+        IDbCommand dbcmd = dbconn.CreateCommand();
+
+        string sqlQuery = "CREATE TABLE IF NOT EXISTS [Level_status] (ID INTEGER, Name TEXT, Status INTEGER, PRIMARY KEY(ID));"; //TheDean Stack Overflow
+        dbcmd.CommandText = sqlQuery;
+        IDataReader reader = dbcmd.ExecuteReader();
+
+
+        while (reader.Read())
+        {
+
+        }
+
+        reader.Close();
+        reader = null;
+        dbcmd.Dispose();
+        dbcmd = null;
+        dbconn.Close();
+        dbconn = null;
+    }
+
+    void initDatabaseLoading()
+    {
+        FirstTimeDatabasing();
+        string conn = "URI=file:" + Application.dataPath + "/SQL/GameSave.db"; //Path to database.
+        IDbConnection dbconn;
+        dbconn = (IDbConnection)new SqliteConnection(conn);
+        dbconn.Open(); //Open connection to the database.
+        IDbCommand dbcmd = dbconn.CreateCommand();
+
+        string sqlQuery = "SELECT ID, Name, Status " + "FROM Level_Status;";
+        dbcmd.CommandText = sqlQuery;
+        IDataReader reader = dbcmd.ExecuteReader();
+
+
+        while (reader.Read())
+        {
+            int IDs = reader.GetInt32(0);
+            string Names = reader.GetString(1);
+            int Statuses = reader.GetInt32(2);
+
+            Debug.Log("ID: " + IDs + ", Name: " +Names+ ", CompleteStatus: " + Statuses);
+        }
+
+        reader.Close();
+        reader = null;
+        dbcmd.Dispose();
+        dbcmd = null;
+        dbconn.Close();
+        dbconn = null;
     }
 }

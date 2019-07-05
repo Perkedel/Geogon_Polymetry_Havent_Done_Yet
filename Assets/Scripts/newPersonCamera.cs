@@ -28,6 +28,8 @@ public class newPersonCamera : MonoBehaviour
     public enum SelectCamera { Person3rd, Person1st};
     SelectCamera selectCamera;
 
+    public bool IamControlable = true;
+
     private void Awake()
     {
         GameObject[] PersonCams = GameObject.FindGameObjectsWithTag("PersonCamera");
@@ -66,9 +68,16 @@ public class newPersonCamera : MonoBehaviour
         {
             transform.position = Vector3.Lerp(transform.position, target.position, MoveDampening * Time.deltaTime);
         }
-        ControlHorizontal = CrossPlatformInputManager.GetAxis("Mouse X");
-        ControlVertical = CrossPlatformInputManager.GetAxis("Mouse Y");
-        ControlScroll = CrossPlatformInputManager.GetAxis("Mouse ScrollWheel");
+        if (IamControlable)
+        {
+            //CameraDisabled = false;
+            ControlHorizontal = Input.GetAxis("Mouse X");
+            ControlVertical = Input.GetAxis("Mouse Y");
+            ControlScroll = Input.GetAxis("Mouse ScrollWheel");
+        } else
+        {
+            //CameraDisabled = true;
+        }
 
         if (!CameraDisabled)
         {
@@ -104,6 +113,13 @@ public class newPersonCamera : MonoBehaviour
         {
             Cam3rdPerson.transform.localPosition = new Vector3(0f, 0f, Mathf.Lerp(Cam3rdPerson.transform.localPosition.z, _CameraDistance * -1f, Time.deltaTime * ScrollDampening));
         }
+    }
+
+
+    public void zeroPositionCamera()
+    {
+        _LocalRotation = new Vector3(0, 0, 0);
+        //setTarget(GameObject.FindGameObjectWithTag("EventSystem"));
     }
 
     public void setTarget()
