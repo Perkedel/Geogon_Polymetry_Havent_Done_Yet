@@ -298,6 +298,40 @@ public class ItemEffects : MonoBehaviour
         targetPlayer.ReceiveKaerlevWave(howMuchKaerlevWavePowerItHas);
     }
 
+    [Header("Health Manipulations")]
+    public bool doSetPlayerHP = false;
+    [Range(0f,100f)] public float SetHPValue = 100f;
+    public void letsSetPlayerHP()
+    {
+        player.HP = SetHPValue;
+    }
+    public bool doHealPlayerHP = false;
+    public float HealPlayerValue = 20f;
+    public void letsHealPlayerHP()
+    {
+        player.HealMe(HealPlayerValue);
+    }
+    public bool doDamagePlayer = false;
+    public float DamagePlayerValue = 20f;
+    public void letsDamagePlayer()
+    {
+        player.DamageMe(DamagePlayerValue);
+    }
+    public bool doDecreasePlayerHP = false;
+    public float DecreaseHPValue = 20f;
+    public void letsDecreasePlayerHP()
+    {
+        player.HP -= DecreaseHPValue;
+    }
+
+    [Header("Inventorials")]
+    public bool doGetCoine = false;
+    public float CurrencyValue = 1f;
+    public void letsGetCoine()
+    {
+        player.Coine += CurrencyValue;
+    }
+
     [Header("Core of the Core Intinya Inti, Pak Ndul")]
     public bool CoreOfInti = true;
     private void DoTriggerEnter()
@@ -353,6 +387,22 @@ public class ItemEffects : MonoBehaviour
         if (doFinishLevel)
         {
             letsFinishLevel();
+        }
+        if (doHealPlayerHP)
+        {
+            letsHealPlayerHP();
+        }
+        if (doSetPlayerHP)
+        {
+            letsSetPlayerHP();
+        }
+        if (doDamagePlayer)
+        {
+            letsDamagePlayer();
+        }
+        if (doGetCoine)
+        {
+            letsGetCoine();
         }
 
         //Destroys and Disables

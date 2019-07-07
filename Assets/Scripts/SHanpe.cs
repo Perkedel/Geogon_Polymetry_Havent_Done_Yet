@@ -51,6 +51,10 @@ public class SHanpe : MonoBehaviour
     public bool IamControllable = true;
     public bool RayGrounded = false;
 
+    //Inventorial
+    [SerializeField] float coine = 0f;
+    public float Coine { get => coine; set => coine = value; }
+
     //Debugging
     public bool ScronchSelfButton = false;
 
@@ -368,7 +372,7 @@ public class SHanpe : MonoBehaviour
 
     public void DamageMe(float HowMuch)
     {
-        HP -= (HowMuch);
+        HP -= (HowMuch)/Armor;
         Armor -= HowMuch;
     }
 
@@ -385,6 +389,9 @@ public class SHanpe : MonoBehaviour
     [Header("Grounded")]
     [SerializeField] bool MeIsGrounded = false;
     [SerializeField] bool footIsGrounded = false;
+
+    
+
     private void OnCollisionEnter(Collision collision)
     {
         Debug.Log("Me is colliding");

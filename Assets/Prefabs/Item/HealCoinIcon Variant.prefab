@@ -1,5 +1,24 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!95 &8918700888808237240
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3889339062849777345}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: ddafb447477b93e439395b7deda6d349, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &5364849328272512721
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -53,27 +72,18 @@ MonoBehaviour:
   doEmitKaerlevWave: 0
   PersistentKaerleEmission: 0
   howMuchKaerlevWavePowerItHas: 0
+  doSetPlayerHP: 0
+  SetHPValue: 100
+  doHealPlayerHP: 1
+  HealPlayerValue: 20
+  doDamagePlayer: 0
+  DamagePlayerValue: 20
+  doDecreasePlayerHP: 0
+  DecreaseHPValue: 20
+  doGetCoine: 0
+  CurrencyValue: 1
   CoreOfInti: 1
   beingHitByPlayer: 0
---- !u!95 &8918700888808237240
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3889339062849777345}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: ddafb447477b93e439395b7deda6d349, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1001 &5104927291301525448
 PrefabInstance:
   m_ObjectHideFlags: 0
