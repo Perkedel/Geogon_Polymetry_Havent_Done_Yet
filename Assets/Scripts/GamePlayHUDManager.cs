@@ -13,6 +13,7 @@ public class GamePlayHUDManager : MonoBehaviour
     public SHanpe player;
     [SerializeField] float DisplayCoineValue = 0f;
     [SerializeField] TextMeshProUGUI CoineText;
+    [SerializeField] GameObject DisplayController;
 
     // Start is called before the first frame update
     void Start()
@@ -23,6 +24,14 @@ public class GamePlayHUDManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.anyKeyDown)
+        {
+            DisplayController.SetActive(false);
+        }
+        if (Input.touchCount >= 1)
+        {
+            DisplayController.SetActive(true);
+        }
         findPlayer();
         //player = Cameraing.target.gameObject.GetComponent<SHanpe>();
         if (player)

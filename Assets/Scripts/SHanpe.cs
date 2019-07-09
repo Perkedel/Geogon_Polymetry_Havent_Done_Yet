@@ -80,6 +80,9 @@ public class SHanpe : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        float JoyHorizontal = Mathf.Clamp(Input.GetAxisRaw("Horizontal") + SimpleInput.GetAxisRaw("Horizontal"), -1f, 1f);
+        float JoyVertical = Mathf.Clamp(Input.GetAxisRaw("Vertical") + SimpleInput.GetAxisRaw("Vertical"), -1f, 1f);
+        float ButtonLoncat = Mathf.Clamp(Input.GetAxisRaw("Jump") + SimpleInput.GetAxisRaw("Loncat"), -1f, 1f);
         if (selectCamera)
         {
             front = new Vector3(0, selectCamera.transform.rotation.y, 0);
@@ -131,8 +134,8 @@ public class SHanpe : MonoBehaviour
                 {
                     //horizontalAxis = CrossPlatformInputManager.GetAxis("Horizontal");
                     //verticalAxis = CrossPlatformInputManager.GetAxis("Vertical");
-                    horizontalAxis = Input.GetAxisRaw("Horizontal");
-                    verticalAxis = Input.GetAxisRaw("Vertical");
+                    horizontalAxis = JoyHorizontal;
+                    verticalAxis = JoyVertical;
                     //IT'S RAW!!! RECOOK AGAIN!
                     //DO NOT CRASH MY GAME AGAIN!
                     //sorry Jonas, I was slipped a thought about your game. about mods that needs recook.
@@ -142,7 +145,7 @@ public class SHanpe : MonoBehaviour
                     horizontalAxis = 0f;
                     verticalAxis = 0f;
                 }
-                if (Input.GetAxisRaw("Jump") > .5f)
+                if (ButtonLoncat > .5f)
                 {
                     if (JumpToken > 0)
                     {
@@ -153,7 +156,7 @@ public class SHanpe : MonoBehaviour
                             hasJumped = true;
                         }
                     }
-                } else if(Input.GetAxisRaw("Jump") < .5f)
+                } else if(ButtonLoncat < .5f)
                 {
                     hasJumped = false;
                 }
@@ -182,7 +185,7 @@ public class SHanpe : MonoBehaviour
 
         //if(Input.GetKey("Horizontal")||Input.GetKey("Vertical")) //not working! get key is about direct system, not by the axis list on project setting!
 
-        if (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0) // with keypress check to make sure it doesn't set velocity when all axes are not pressed
+        if (JoyHorizontal != 0 || JoyVertical != 0) // with keypress check to make sure it doesn't set velocity when all axes are not pressed
         { //OH! maybe if I use raw, this method won't apply the irrealistic slow recoil! I guess...
             if (Forcing > 0)
             {
