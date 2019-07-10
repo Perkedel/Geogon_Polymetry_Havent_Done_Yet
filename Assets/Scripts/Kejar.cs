@@ -54,7 +54,7 @@ public class Kejar : MonoBehaviour
             if (AttackHandcast.isAttackHandcastHit)
             {
                 Focus = Target.GetComponent<SHanpe>();
-                if (Focus && me.isActiveAndEnabled)
+                if (Focus && me.isActiveAndEnabled && Focus.isAlive)
                 {
                     
                     Debug.Log("Attacked");
@@ -73,15 +73,25 @@ public class Kejar : MonoBehaviour
                         AttackDelayTimer = DelayIn;
                     }
                 }
+                if (!Focus.isAlive)
+                {
+                    Focus = null;
+                    //Target = null;
+                    AttackHandcast.stopAttackHandcasst();
+                }
             } else
             {
                 AttackDelayTimer = DelayIn;
                 hasBeenAttacked = false;
+                Focus = null;
+                //Target = null;
             }
         } else
         {
             AttackDelayTimer = DelayIn;
             hasBeenAttacked = false;
+            Focus = null;
+            Target = null;
         }
 
         if (me.enabled)

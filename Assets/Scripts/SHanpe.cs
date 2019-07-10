@@ -382,7 +382,7 @@ public class SHanpe : MonoBehaviour
 
     public void DamageMe(float HowMuch)
     {
-        HP -= (HowMuch)/Armor;
+        HP -= ((HowMuch));
         Armor -= HowMuch;
     }
 

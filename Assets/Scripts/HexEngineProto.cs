@@ -55,10 +55,13 @@ public class HexEngineProto : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        var go = GameObject.FindGameObjectWithTag("Player");
-        if (go)
+        if (!player)
         {
-            player = go.GetComponent<SHanpe>();
+            var go = GameObject.FindGameObjectWithTag("Player");
+            if (go)
+            {
+                player = go.GetComponent<SHanpe>();
+            }
         }
 
         //https://youtu.be/FRbRQFpVFxg
@@ -122,6 +125,34 @@ public class HexEngineProto : MonoBehaviour
 
 
         }
+
+        if (isLeveling)
+        {
+            //Debug.Log("IsLeveling");
+            //if (Input.GetAxisRaw("Cancel")>.5)
+            //{
+            //    if (!PausePress)
+            //    {
+            //        PressPauseButton();
+            //        PausePress = true;
+            //    }
+            //} else if (Input.GetAxisRaw("Cancel") < .5)
+            //{
+            //    PausePress = false;
+            //}
+            if (SimpleInput.GetKeyDown(KeyCode.Escape)) //Escape won't work in editor
+            {
+                Debug.Log("Escape Straused");
+                if (!IsGamePaused)
+                {
+                    PressPauseButton();
+                } else
+                {
+                    ResumeThisGame();
+                }
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.Escape)) Debug.Log("EscapeButton");
     }
 
     [Header("Core Buttons")]
@@ -222,11 +253,13 @@ public class HexEngineProto : MonoBehaviour
     }
     public void leaveTheLevel()
     {
+        isLeveling = false;
         UnfreezeGame();
         GameHUDManager.EndChangeShape();
         if (GameplayHUD) GameplayHUD.SetActive(false);
         UnloadLevel(CurrentLevelName);
         backToMainMenu(GameplayHUD);
+        
     }
     public void awayFromMainMenu()
     {
@@ -259,6 +292,7 @@ public class HexEngineProto : MonoBehaviour
     [SerializeField] string TestoingLevelName = "SampleScene";
     public void PlayThisLevel()
     {
+        isLeveling = true;
         ResetLevelFinishActionCountdown();
         LevelFinished = false;
         CurrentMenuLocation = GameplayHUD;
@@ -280,9 +314,11 @@ public class HexEngineProto : MonoBehaviour
             player = go.GetComponent<SHanpe>();
         }
         setCharacter();
+        
     }
     public void PlayThisLevel(string LevelName)
     {
+        isLeveling = true;
         ResetLevelFinishActionCountdown();
         LevelFinished = false;
         CurrentMenuLocation = GameplayHUD;
@@ -304,11 +340,18 @@ public class HexEngineProto : MonoBehaviour
             player = go.GetComponent<SHanpe>();
         }
         setCharacter();
+        
     }
 
     //Pause Resumes
     [Header("Pause Resume")]
     [SerializeField] float previousTimeScale = 1f;
+    [SerializeField] bool PausePress = false;
+    [SerializeField] bool IsGamePaused = false;
+    public void PressPauseButton()
+    {
+        PauseThisGame();
+    }
     public void FreezeGame()
     {
         previousTimeScale = Time.timeScale;
@@ -321,6 +364,7 @@ public class HexEngineProto : MonoBehaviour
     }
     public void PauseThisGame()
     {
+        IsGamePaused = true;
         GameHUDManager.EndChangeShape();
         FreezeGame();
         if (player) player.IamControllable = false;
@@ -334,6 +378,7 @@ public class HexEngineProto : MonoBehaviour
     }
     public void ResumeThisGame()
     {
+        IsGamePaused = false;
         UnfreezeGame();
         CurrentMenuLocation = GameplayHUD;
         if (player) player.IamControllable = true;

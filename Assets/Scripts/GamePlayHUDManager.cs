@@ -36,15 +36,18 @@ public class GamePlayHUDManager : MonoBehaviour
         //A hat in time http://hatintime.com/ 
         if (player.IamControllable)
         {
-            if (SimpleInput.GetButtonDown("ChangeShape") || Input.GetMouseButtonDown(1))
+            if (!DisplayController.activeSelf)
             {
-                if (!ChangingShape)
+                if (SimpleInput.GetMouseButtonDown(1))
                 {
-                    StartChangeShape();
+                    ToggleChangeShape();
                 }
-                else
+            } else
+            {
+                if (ChangeButtonPress)
                 {
-                    EndChangeShape();
+                    ToggleChangeShape();
+                    ChangeButtonPress = false;
                 }
             }
         }
@@ -80,6 +83,26 @@ public class GamePlayHUDManager : MonoBehaviour
     [SerializeField] GameObject GamingArea, ChangeShapeArea;
     [SerializeField] float previousTimeScale;
     public bool ChangingShape = false;
+    public bool ChangeButtonPress = false;
+    public void PressChangeShape()
+    {
+        ChangeButtonPress = true;
+    }
+    public void ReleaseChangeShape()
+    {
+        ChangeButtonPress = false;
+    }
+    public void ToggleChangeShape()
+    {
+        if (!ChangingShape)
+        {
+            StartChangeShape();
+        }
+        else
+        {
+            EndChangeShape();
+        }
+    }
     public void StartChangeShape()
     {
         ChangingShape = true;
@@ -106,17 +129,23 @@ public class GamePlayHUDManager : MonoBehaviour
     public void SelectSphere()
     {
         player.goToShape(0);
+        Debug.Log("Change Shape");
         EndChangeShape();
+        Debug.Log("Close Shape");
     }
     public void SelectBox()
     {
         player.goToShape(1);
+        Debug.Log("Change Shape");
         EndChangeShape();
+        Debug.Log("Close Shape");
     }
     public void SelectTetrahedron()
     {
         player.goToShape(2);
+        Debug.Log("Change Shape");
         EndChangeShape();
+        Debug.Log("Close Shape");
     }
 
     private void OnEnable()

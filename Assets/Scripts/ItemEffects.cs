@@ -13,6 +13,7 @@ public class ItemEffects : MonoBehaviour
     public SHanpe targetPlayer;
 
     public bool[] MustBeTheseShapeIndexes = { true, true, true };
+    public bool CanAlsoBeDeddShape = false;
     public bool Deserves = false;
     
 
@@ -67,16 +68,35 @@ public class ItemEffects : MonoBehaviour
 
             for (int i = 0; i < MustBeTheseShapeIndexes.Length; i++)
             {
-                if (MustBeTheseShapeIndexes[i] && SHanpeShapeIndex == i)
+                if (targetPlayer.isAlive)
                 {
-                    Deserves = true;
-                } else if(!MustBeTheseShapeIndexes[i] && SHanpeShapeIndex == i)
+                    if (MustBeTheseShapeIndexes[i] && SHanpeShapeIndex == i)
+                    {
+                        Deserves = true;
+                    }
+                    else if (!MustBeTheseShapeIndexes[i] && SHanpeShapeIndex == i)
+                    {
+                        Deserves = false;
+                    }
+                } else
                 {
-                    Deserves = false;
+                    if (CanAlsoBeDeddShape)
+                    {
+                        Deserves = true;
+                    } else
+                    {
+                        Deserves = false;
+                        //player = null;
+                        //targetPlayer = null;
+                        ParentOfHitting = null;
+                    }
                 }
             }
 
-
+            //if (!targetPlayer.isAlive)
+            //{
+            //    targetPlayer = null;
+            //}
         }
         //if (!hexEngineProtoTargetMe)
         //{
@@ -259,6 +279,10 @@ public class ItemEffects : MonoBehaviour
     public void stopAttackHandcasst()
     {
         isAttackHandcastHit = false;
+        if (MusuhEngine)
+        {
+            MusuhEngine.Focus = null;
+        }
     }
 
     [Header("Spawn GameObjects")]
