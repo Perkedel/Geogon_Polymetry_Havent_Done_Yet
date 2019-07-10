@@ -14,6 +14,7 @@ public class GamePlayHUDManager : MonoBehaviour
     [SerializeField] float DisplayCoineValue = 0f;
     [SerializeField] TextMeshProUGUI CoineText;
     [SerializeField] GameObject DisplayController;
+    [SerializeField] GameObject ChangeShapeButton;
 
     // Start is called before the first frame update
     void Start()
@@ -31,6 +32,21 @@ public class GamePlayHUDManager : MonoBehaviour
         if (Input.touchCount >= 1)
         {
             DisplayController.SetActive(true);
+        }
+        //A hat in time http://hatintime.com/ 
+        if (player.IamControllable)
+        {
+            if (SimpleInput.GetButtonDown("ChangeShape") || Input.GetMouseButtonDown(1))
+            {
+                if (!ChangingShape)
+                {
+                    StartChangeShape();
+                }
+                else
+                {
+                    EndChangeShape();
+                }
+            }
         }
         findPlayer();
         //player = Cameraing.target.gameObject.GetComponent<SHanpe>();
@@ -59,6 +75,48 @@ public class GamePlayHUDManager : MonoBehaviour
         {
             player = playerFound.GetComponent<SHanpe>();
         }
+    }
+
+    [SerializeField] GameObject GamingArea, ChangeShapeArea;
+    [SerializeField] float previousTimeScale;
+    public bool ChangingShape = false;
+    public void StartChangeShape()
+    {
+        ChangingShape = true;
+        GamingArea.SetActive(false);
+        ChangeShapeButton.SetActive(false);
+        ChangeShapeArea.SetActive(true);
+        previousTimeScale = Time.timeScale;
+        Time.timeScale = 0.1f;
+    }
+    public void EndChangeShape()
+    {
+        ChangingShape = false;
+        GamingArea.SetActive(true);
+        ChangeShapeButton.SetActive(true);
+        ChangeShapeArea.SetActive(false);
+        Time.timeScale = 1f;
+    }
+    public void SelectTheShape(int SelectNumber)
+    {
+        player.goToShape(SelectNumber);
+        EndChangeShape();
+    }
+    //SelectShape
+    public void SelectSphere()
+    {
+        player.goToShape(0);
+        EndChangeShape();
+    }
+    public void SelectBox()
+    {
+        player.goToShape(1);
+        EndChangeShape();
+    }
+    public void SelectTetrahedron()
+    {
+        player.goToShape(2);
+        EndChangeShape();
     }
 
     private void OnEnable()

@@ -304,10 +304,17 @@ public class SHanpe : MonoBehaviour
         Forcing = shapeLists[whichIndex].Forcing;
     }
 
-    void moveShape(int howMuch)
+    public void moveShape(int howMuch)
     {
         prevShapeIndex = shapeIndex;
         shapeIndex += howMuch;
+        correctIndex();
+        setShape(shapeIndex);
+    }
+    public void goToShape(int Selectindex)
+    {
+        prevShapeIndex = shapeIndex;
+        shapeIndex = Selectindex;
         correctIndex();
         setShape(shapeIndex);
     }

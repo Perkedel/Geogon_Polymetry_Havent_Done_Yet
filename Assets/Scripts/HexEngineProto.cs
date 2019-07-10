@@ -37,6 +37,11 @@ public class HexEngineProto : MonoBehaviour
         }
 
         DontDestroyOnLoad(this.gameObject);
+
+        GameplayHUD.SetActive(false);
+        LevelSelectMenu.SetActive(false);
+        MainMenuItself.SetActive(true);
+        yesNoDialog.gameObject.SetActive(false);
     }
 
     // Start is called before the first frame update
@@ -217,6 +222,8 @@ public class HexEngineProto : MonoBehaviour
     }
     public void leaveTheLevel()
     {
+        UnfreezeGame();
+        GameHUDManager.EndChangeShape();
         if (GameplayHUD) GameplayHUD.SetActive(false);
         UnloadLevel(CurrentLevelName);
         backToMainMenu(GameplayHUD);
@@ -255,7 +262,7 @@ public class HexEngineProto : MonoBehaviour
         ResetLevelFinishActionCountdown();
         LevelFinished = false;
         CurrentMenuLocation = GameplayHUD;
-
+        MainMenuo.SelectMenuingType = MainMenuing.MenuingType.PauseMenu;
         if (player)
         {
             player.IamControllable = true;
@@ -279,7 +286,7 @@ public class HexEngineProto : MonoBehaviour
         ResetLevelFinishActionCountdown();
         LevelFinished = false;
         CurrentMenuLocation = GameplayHUD;
-
+        MainMenuo.SelectMenuingType = MainMenuing.MenuingType.PauseMenu;
         if (player)
         {
             player.IamControllable = true;
@@ -299,21 +306,40 @@ public class HexEngineProto : MonoBehaviour
         setCharacter();
     }
 
+    //Pause Resumes
+    [Header("Pause Resume")]
+    [SerializeField] float previousTimeScale = 1f;
+    public void FreezeGame()
+    {
+        previousTimeScale = Time.timeScale;
+        Time.timeScale = 0f;
+    }
+    public void UnfreezeGame()
+    {
+        //Time.timeScale = previousTimeScale;
+        Time.timeScale = 1f;
+    }
     public void PauseThisGame()
     {
+        GameHUDManager.EndChangeShape();
+        FreezeGame();
         if (player) player.IamControllable = false;
         if (cameraRig) cameraRig.IamControlable = false;
+        
         if (GameplayHUD) GameplayHUD.SetActive(false);
+        
         MainMenuo.SelectMenuingType = MainMenuing.MenuingType.PauseMenu;
         isOnMainMenu = true;
         MainMenuItself.SetActive(true);
     }
     public void ResumeThisGame()
     {
+        UnfreezeGame();
         CurrentMenuLocation = GameplayHUD;
         if (player) player.IamControllable = true;
         if (cameraRig) cameraRig.IamControlable = true;
         if (GameplayHUD) GameplayHUD.SetActive(true);
+        
         //MainMenuo.SelectMenuingType = MainMenuing.MenuingType.MainMenu;
         isOnMainMenu = false;
         MainMenuItself.SetActive(false);
@@ -390,6 +416,7 @@ public class HexEngineProto : MonoBehaviour
     }
     public void FinishLevel(ItemEffects.FinishChoice Choosing, ItemEffects.FinishAction Actioning)
     {
+        GameHUDManager.EndChangeShape();
         LevelFinished = true;
         player.IamControllable = false;
 
