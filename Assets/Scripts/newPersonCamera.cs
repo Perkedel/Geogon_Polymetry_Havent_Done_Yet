@@ -71,7 +71,7 @@ public class newPersonCamera : MonoBehaviour
         if (IamControlable)
         {
             //CameraDisabled = false;
-            ControlHorizontal = Input.GetAxis("Mouse X") + SimpleInput.GetAxisRaw("CamHorizontal");
+            ControlHorizontal = Input.GetAxis("Mouse X") + SimpleInput.GetAxisRaw("CamHorizontal"); //remove redundancy! just use Input I guess?
             ControlVertical = Input.GetAxis("Mouse Y") + SimpleInput.GetAxisRaw("CamVertical");
             ControlScroll = Input.GetAxis("Mouse ScrollWheel") + SimpleInput.GetAxisRaw("Zoomings");
         } else
